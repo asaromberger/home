@@ -1,0 +1,11 @@
+development:
+  adapter: postgresql
+  host: localhost
+  username: postgres
+  password: P@ssw0rd
+  encoding: unicode
+  database: home
+
+test:
+
+production:
