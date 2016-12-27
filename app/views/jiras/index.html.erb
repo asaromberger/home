@@ -1,0 +1,55 @@
+<h1><%= @title %></h1>
+
+<h2>Active</h2>
+
+<table>
+
+<thead>
+<tr>
+<th>ID</th>
+<th>Summary</th>
+<th>Status</th>
+<th>Description</th>
+<th>Edit</th>
+</tr>
+</thead>
+
+<tbody>
+<% @jiras.each do |jira| %>
+	<tr>
+	<td><%= jira.id %></td>
+	<td><%= jira.summary %></td>
+	<td><%= jira.status %></td>
+	<td><%= jira.description %></td>
+	<td><%= link_to 'Edit', edit_jira_path(id: jira.id), method: :get %></td>
+	</tr>
+<% end %>
+</tbody>
+
+</table>
+
+<%= link_to 'Add', new_jira_path, method: :get %>
+
+<h2>Complete</h2>
+
+<table>
+
+<thead>
+<tr>
+<th>ID</th>
+<th>Summary</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<% @jirascomplete.each do |jira| %>
+	<tr>
+	<td><%= jira.id %></td>
+	<td><%= jira.summary %></td>
+	<td><%= jira.description %></td>
+	</tr>
+<% end %>
+</tbody>
+
+</table>

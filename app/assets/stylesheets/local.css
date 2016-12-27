@@ -1,0 +1,4 @@
+/* horizontal padding on table cells to separate them */
+th, td {
+	padding: 0px 5px 0px 5px;
+}

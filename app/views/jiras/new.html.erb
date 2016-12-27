@@ -1,0 +1,18 @@
+<h1><%= @title %></h1>
+
+<%= form_for(@jira) do |jira| %>
+
+	<%= jira.label :summary, class: 'col-md-2' %>
+	<%= jira.text_field :summary, class: 'col-md-10' %>
+
+	<div class='clearfix'></div>
+
+	<%= jira.label :description, class: 'col-md-2' %>
+	<%= jira.text_field :description, class: 'col-md-10' %>
+
+	<div class='clearfix'></div>
+
+	<%= jira.submit 'Create Jira', class: 'btn btn-primary col-md-2' %>
+
+<% end %>
+
