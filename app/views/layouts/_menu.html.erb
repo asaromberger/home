@@ -4,10 +4,17 @@
 			<a class='navbar-brand' href='/'>HOME</a>
 		</div>
 
-		<ul class='nav navbar-nav navbar-right'>
+		<% if signed_in? %>
 
-			<%= render 'layouts/menu_jira' %>
+			<ul class='nav navbar-nav navbar-right'>
 
-		</ul>
+				<%= render 'layouts/menu_jira' %>
+
+				<%= render 'layouts/menu_user' %>
+
+			</ul>
+
+		<% end %>
+
 	</div>
 </nav>
