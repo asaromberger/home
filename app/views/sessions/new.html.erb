@@ -1,0 +1,24 @@
+<h1>Welcome</h1>
+
+<%= form_for(:session, :url => sessions_path) do |f| %>
+
+	<div class="field">
+	<%= f.label :signin, "Sign In Name", class: 'col-md-2' %>
+	<%= f.text_field :signin, class: 'col-md-4' %>
+	</div>
+
+	<div class='clearfix'></div>
+
+	<div class="field">
+	<%= f.label :password, class: 'col-md-2' %>
+	<%= f.password_field :password, class: 'col-md-4' %>
+	</div>
+
+	<div class='clearfix'></div>
+
+	<div class="actions">
+	<%= f.submit "Sign in", class: 'btn btn-primary col-xs-4 col-sm-2' %>
+	</div>
+
+<% end %>
+

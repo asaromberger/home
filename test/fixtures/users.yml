@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  signin: MyString
+  password_digest: MyString
+  remember_token: MyString
+
+two:
+  signin: MyString
+  password_digest: MyString
+  remember_token: MyString
