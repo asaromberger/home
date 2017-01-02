@@ -30,11 +30,17 @@ class AdminController < ApplicationController
 		@user = User.find(params[:id])
 		['admin', 'jira'].each do |role|
 			if params[role] == 'on'
-				Permission.where("user_id = ? and pkey = ?", @user.id, role).count == 0
-				p = Permission.new
-				p.user_id = @user.id
-				p.pkey = role
-				p.save
+				if Permission.where("user_id = ? and pkey = ?", @user.id, role).count == 0
+					p = Permission.new
+					p.user_id = @user.id
+					p.pkey = role
+					p.save
+				end
+			else
+				p = Permission.where("user_id = ? and pkey = ?", @user.id, role)
+				if p.count
+					p.first.delete
+				end
 			end
 		end
 		redirect_to admin_roles_path, notice: "Roles updated"
