@@ -12,11 +12,6 @@ module SessionsHelper
 		@current_user ||= User.find_by(remember_token: remember_token)
 	end
 
-	def current_user?(user)
-	fail
-		current_user == user
-	end
-
 	def signed_in?
 		!current_user.nil?
 	end
@@ -41,9 +36,12 @@ module SessionsHelper
 		end
 	end
 
-	def current_user_admin?
-	fail
-		current_user && current_user.admin?
+	def has_role(user_id, role)
+		if Permission.where("user_id = ? AND pkey = ?", user_id, role).count > 0
+			return true
+		else
+			return false
+		end
 	end
 
 end

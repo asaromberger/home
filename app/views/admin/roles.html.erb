@@ -1,0 +1,10 @@
+<h1><%= @title %></h1>
+
+<%= form_tag admin_roles_edit_path, method: 'get' do %>
+	<%= label_tag 'User signin' %>
+	<%= text_field_tag :signin %>
+
+	<div class='clearfix'><p>&nbsp;</b></div>
+
+	<%= submit_tag 'Select', class: 'btn btn-large btn-primary' %>
+<% end %>

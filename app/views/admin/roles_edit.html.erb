@@ -1,0 +1,20 @@
+<h1><%= @title %></h1>
+
+<h2><%= @user.signin %></h2>
+
+<%= form_tag admin_roles_update_path, :method => :get do %>
+	<%= hidden_field_tag :id, @user.id %>
+	<table>
+	<% @roles.each do |role| %>
+		<tr>
+		<td><%= label_tag role %></td>
+		<td><%= check_box_tag role, nil, @values[role] %></td>
+		</tr>
+	<% end %>
+	</table>
+
+	<div class='clearfix'><p>&nbsp;</b></div>
+
+	<%= submit_tag 'Submit', class: 'btn btn-large btn-primary' %>
+
+<% end %>
