@@ -1,5 +1,5 @@
 class What < ApplicationRecord
 	
-	belongs to :category
+	belongs_to :category
 
 end
