@@ -1,0 +1,33 @@
+<h1><%= @title %></h1>
+
+<%= link_to 'New Category', new_category_path %>
+
+<div class='clearfix'><p>&nbsp;</p></div>
+
+<table table-bordered>
+
+<thead>
+<tr>
+<th>Type</th>
+<th>Category</th>
+<th>Sub Category</th>
+<th>Tax</th>
+<th>Edit</th>
+<th>Delete</th>
+</tr>
+</thead>
+
+<tbody>
+<% @categories.each do |category| %>
+	<tr>
+	<td><%= category.ctype %></td>
+	<td><%= category.category %></td>
+	<td><%= category.subcategory %></td>
+	<td><%= category.tax %></td>
+	<td><%= link_to 'Edit', edit_category_path(category.id) %></td>
+	<td><%= link_to 'Delete', category_path(category.id), method: :delete, data: {confirm: "Delete #{category.ctype}/#{category.category}/#{category.subcategory}/#{category.tax}?"} %></td>
+	</tr>
+<% end %>
+</tbody>
+
+</table>
