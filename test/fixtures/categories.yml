@@ -4,10 +4,10 @@ one:
   type: 
   category: MyString
   subcategory: MyString
-  tax: false
+  tax: MyString
 
 two:
   type: 
   category: MyString
   subcategory: MyString
-  tax: false
+  tax: MyString
