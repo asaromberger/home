@@ -1,0 +1,25 @@
+<%= form_for(@category) do |form| %>
+
+	<%= form.label 'Type', class: 'col-md-2' %>
+	<%= form.text_field :ctype, class: 'col-md-10' %>
+
+	<div class='clearfix'></div>
+
+	<%= form.label :category, class: 'col-md-2' %>
+	<%= form.text_field :category, class: 'col-md-10' %>
+
+	<div class='clearfix'></div>
+
+	<%= form.label :subcategory, class: 'col-md-2' %>
+	<%= form.text_field :subcategory, class: 'col-md-10' %>
+
+	<div class='clearfix'></div>
+
+	<%= form.label :tax, class: 'col-md-2' %>
+	<%= form.text_field :tax, class: 'col-md-10' %>
+
+	<div class='clearfix'></div>
+
+	<%= form.submit 'Update Category', class: 'btn btn-primary col-md-3' %>
+<% end %>
+
