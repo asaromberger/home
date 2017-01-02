@@ -30,7 +30,7 @@ class CategoriesController < ApplicationController
 	def update
 		@category = Category.find(params[:id])
 		if @category.update(category_params)
-			redirect_to categories_path, notice: 'Category Added'
+			redirect_to categories_path, notice: 'Category Updated'
 		else
 			redirect_to categories_path, alert: 'Failed to create Category'
 		end
@@ -39,7 +39,7 @@ class CategoriesController < ApplicationController
 	def destroy
 		@category = Category.find(params[:id])
 		@category.delete
-		redirect_to categories_path, notice: "Category #{@category.ctype}/#{@category.category}/#{@category.subcategory}/#{@category.tax}"
+		redirect_to categories_path, notice: "Category #{@category.ctype}/#{@category.category}/#{@category.subcategory}/#{@category.tax} Deleted"
 	end
 
 private

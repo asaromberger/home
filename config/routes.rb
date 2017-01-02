@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 	resources :jiras
 	resources :users
 	resources :categories
+	resources :whats
 
 	match '/signout', to: 'sessions#destroy', via: :delete
 
