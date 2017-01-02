@@ -4,7 +4,7 @@ class CreateCategories < ActiveRecord::Migration[5.0]
       t.string :type
       t.string :category
       t.string :subcategory
-      t.boolean :tax
+      t.string :tax
 
       t.timestamps
     end
