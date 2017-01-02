@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  type: 
+  category: MyString
+  subcategory: MyString
+  tax: false
+
+two:
+  type: 
+  category: MyString
+  subcategory: MyString
+  tax: false
