@@ -1,0 +1,43 @@
+<h1><%= @title %></h1>
+
+<%= link_to 'Add', new_item_path(year: @year), method: :get %>
+
+<h2><%= @year %></h2>
+
+<table class='table-bordered'>
+
+<thead>
+<tr>
+<th>Date</th>
+<th>+/-</th>
+<th>Check</th>
+<th>What</th>
+<th>Amount</th>
+<th>Type</th>
+<th>Category</th>
+<th>Subcat</th>
+<th>Tax</th>
+<th>Edit</th>
+<th>Delete</th>
+</tr>
+</thead>
+
+<tbody>
+<% @items.each do |item| %>
+	<tr>
+	<td><%= item.date %></td>
+	<td><%= item.pm %></td>
+	<td><%= item.checkno %></td>
+	<td><%= item.what.what %></td>
+	<td><%= item.amount %></td>
+	<td><%= item.what.category.ctype %></td>
+	<td><%= item.what.category.category %></td>
+	<td><%= item.what.category.subcategory %></td>
+	<td><%= item.what.category.tax %></td>
+	<td><%= link_to 'Edit', edit_item_path(item.id) %></td>
+	<td><%= link_to 'Delete', item_path(item.id), method: :delete, data: {confirm: "Delete #{item.date}, #{item.what.what}, #{item.amount}?"} %></td>
+	</tr>
+<% end %>
+</tbody>
+
+</table>

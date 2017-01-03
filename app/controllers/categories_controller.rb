@@ -32,7 +32,7 @@ class CategoriesController < ApplicationController
 		if @category.update(category_params)
 			redirect_to categories_path, notice: 'Category Updated'
 		else
-			redirect_to categories_path, alert: 'Failed to create Category'
+			redirect_to categories_path, alert: 'Failed to update Category'
 		end
 	end
 
