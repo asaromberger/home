@@ -46,6 +46,18 @@ class AdminController < ApplicationController
 		redirect_to admin_roles_path, notice: "Roles updated"
 	end
 
+	def schema
+		@title = 'Schema'
+		@tables = Hash.new
+		ActiveRecord::Base.connection.tables.sort.each do |table|
+			if table != 'ar_internal_metadata' && table != 'schema_migrations'
+				table_columns = table.classify.constantize.columns
+				# @tables[table] = Hash.new
+				@tables[table] = table_columns
+			end
+		end
+	end
+
 private
 	
 	def require_admin
