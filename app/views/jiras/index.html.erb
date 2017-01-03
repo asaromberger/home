@@ -1,5 +1,7 @@
 <h1><%= @title %></h1>
 
+<%= link_to 'Add', new_jira_path, method: :get %>
+
 <h2>Active</h2>
 
 <table>
@@ -27,8 +29,6 @@
 </tbody>
 
 </table>
-
-<%= link_to 'Add', new_jira_path, method: :get %>
 
 <h2>Complete</h2>
 
