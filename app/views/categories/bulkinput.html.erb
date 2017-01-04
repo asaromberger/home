@@ -1,0 +1,28 @@
+<h1><%= @title %></h1>
+
+<% if @errors && @errors.count > 0 %>
+Notes:
+<ul>
+<% @errors.each do |error| %>
+	<li><%= error %></li>
+<% end %>
+</ul>
+<% end %>
+
+Text area is a series of lines with the following tab separated columns:
+<ul>
+<li>type</li>
+<li>category</li>
+<li>subcategory</li>
+<li>tax</li>
+</ul>
+
+<%= form_tag bulkinputupdate_path, method: :get do %>
+
+<%= text_area_tag :input, @input %>
+
+<div class='clearfix'><p>&nbsp;</p></div>
+
+<%= submit_tag 'Submit', class: 'btn btn-primary col_md_1' %>
+
+<% end %>
