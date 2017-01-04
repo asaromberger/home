@@ -2,7 +2,7 @@ class JirasController < ApplicationController
 
 	def index
 		@title = 'Jira'
-		@jiras = Jira.where("status != 'complete'").order('id')
+		@jiras = Jira.where("status != 'complete'").order('priority, id')
 		@jirascomplete = Jira.where("status = 'complete'").order('id')
 	end
 
@@ -39,7 +39,7 @@ class JirasController < ApplicationController
 private
 
 	def jira_params
-		params.require(:jira).permit(:summary, :status, :description)
+		params.require(:jira).permit(:summary, :status, :description, :priority)
 	end
 
 end

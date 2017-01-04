@@ -11,8 +11,9 @@
 <th>ID</th>
 <th>Summary</th>
 <th>Status</th>
-<th>Description</th>
+<th>Priority</th>
 <th>Edit</th>
+<th>Description</th>
 </tr>
 </thead>
 
@@ -22,8 +23,9 @@
 	<td><%= jira.id %></td>
 	<td><%= jira.summary %></td>
 	<td><%= jira.status %></td>
-	<td><%= jira.description %></td>
+	<td><%= jira.priority %></td>
 	<td><%= link_to 'Edit', edit_jira_path(id: jira.id), method: :get %></td>
+	<td><%= jira.description %></td>
 	</tr>
 <% end %>
 </tbody>

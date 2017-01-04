@@ -52,7 +52,6 @@ class AdminController < ApplicationController
 		ActiveRecord::Base.connection.tables.sort.each do |table|
 			if table != 'ar_internal_metadata' && table != 'schema_migrations'
 				table_columns = table.classify.constantize.columns
-				# @tables[table] = Hash.new
 				@tables[table] = table_columns
 			end
 		end
