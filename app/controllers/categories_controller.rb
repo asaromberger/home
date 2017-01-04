@@ -42,6 +42,47 @@ class CategoriesController < ApplicationController
 		redirect_to categories_path, notice: "Category #{@category.ctype}/#{@category.category}/#{@category.subcategory}/#{@category.tax} Deleted"
 	end
 
+	def bulkinput
+		@title = 'Bulk Input of Categories'
+		@input = ''
+	end
+
+	def bulkinputupdate
+		@title = 'Bulk Input of Categories'
+		@input = params[:input]
+		@errors = []
+		lines = @input.split("\n")
+		lines.each do |line|
+			# parse line
+			fields = line.split("\t")
+			if fields[2]
+				ctype = fields[0].gsub(/^\s*/, '').gsub(/\s*$/, '')
+				category = fields[1].gsub(/^\s*/, '').gsub(/\s*$/, '')
+				subcategory = fields[2].gsub(/^\s*/, '').gsub(/\s*$/, '')
+				if fields[3]
+					tax = fields[3].gsub(/^\s*/, '').gsub(/\s*$/, '')
+				else
+					tax = ''
+				end
+				db = Category.where("ctype = ? AND category = ? AND subcategory = ? AND tax = ?", ctype, category, subcategory, tax)
+				if db.count > 0
+					@errors.push("DUP: #{line}")
+				else
+					newcategory = Category.new
+					newcategory.ctype = ctype
+					newcategory.category = category
+					newcategory.subcategory = subcategory
+					newcategory.tax = tax
+					newcategory.save
+					@errors.push("ADDED: #{line}")
+				end
+			else
+				@errors.push("BAD LINE: #{line}")
+			end
+		end
+		render action: :bulkinput
+	end
+
 private
 	
 	def category_params

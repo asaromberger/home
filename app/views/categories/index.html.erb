@@ -1,7 +1,8 @@
 <h1><%= @title %></h1>
 
-<%= link_to 'New Category', new_category_path %>
+<%= link_to 'New Category', new_category_path, class: 'btn btn-primary col-md-1' %>
 
+<div class='clearfix'><p>&nbsp;</p></div>
 <div class='clearfix'><p>&nbsp;</p></div>
 
 <table table-bordered>
@@ -31,3 +32,7 @@
 </tbody>
 
 </table>
+
+<div class='clearfix'><p>&nbsp;</p></div>
+
+<%= link_to 'Bulk Input', bulkinput_path, class: 'btn btn-primary col-md-1' %></td>
