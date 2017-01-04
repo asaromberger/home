@@ -5,16 +5,24 @@
 
 	<div class='clearfix'></div>
 
+	<% if @jira.persisted? %>
+		<%= jira.label :status, class: 'col-md-2' %>
+		<%= jira.select :status, @statuses, {}, class: 'col-md-10' %>
+
+		<div class='clearfix'></div>
+	<% end %>
+
 	<%= jira.label :description, class: 'col-md-2' %>
-	<%= jira.text_field :description, class: 'col-md-10' %>
+	<%= jira.text_area :description, class: 'col-md-10' %>
 
 	<div class='clearfix'></div>
 
-	<% if @jira.persisted? %>
-		<%= jira.submit 'Update Jira', class: 'btn btn-primary col-md-2' %>
-	<% else %>
-		<%= jira.submit 'Create Jira', class: 'btn btn-primary col-md-2' %>
-	<% end %>
+	<%= jira.label :priority, class: 'col-md-2' %>
+	<%= jira.number_field :priority, class: 'col-md-2' %>
+
+	<div class='clearfix'></div>
+
+	<%= jira.submit 'Update Jira', class: 'btn btn-primary col-md-2' %>
 
 <% end %>
 
