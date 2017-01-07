@@ -196,7 +196,11 @@ class BulkinputController < ApplicationController
 		Category.all.order('ctype, category, subcategory, tax').each do |category|
 			@categorylist.push(["#{category.ctype}/#{category.category}/#{category.subcategory}/#{category.tax}", category.id])
 		end
-		render action: :create
+		if @table.count > 0
+			render action: :create
+		else
+			redirect_to inputfromtracking_path, notice: "Entry Complete"
+		end
 	end
 
 	def edit

@@ -41,8 +41,7 @@
 			<%= hidden_field_tag "table[#{index}][check]", values['check'] %>
 			<td><%= values['check'] %></td>
 
-			<%= hidden_field_tag "table[#{index}][what]", values['what'] %>
-			<td><%= values['what'] %></td>
+			<td><%= text_field_tag "table[#{index}][what]", values['what'] %></td>
 
 			<%= hidden_field_tag "table[#{index}][amount]", values['amount'] %>
 			<td><%= values['amount'] %></td>
