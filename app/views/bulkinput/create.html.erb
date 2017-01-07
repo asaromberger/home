@@ -1,0 +1,69 @@
+<h1><%= @title %></h1>
+
+<% if @errors && @errors.count > 0 %>
+	Notes:
+	<ul>
+	<% @errors.each do |error| %>
+		<li><%= error %></li>
+	<% end %>
+	</ul>
+<% end %>
+
+<%= form_tag new_bulkinput_path, method: :get do %>
+
+	<table>
+
+	<thead>
+	<tr>
+	<th>Status</th>
+	<th>Date</th>
+	<th>+/-</th>
+	<th>Check</th>
+	<th>What</th>
+	<th>Amount</th>
+	<th>Map</th>
+	<th>Category</th>
+	</tr>
+	</thead>
+
+	<tbody>
+		<% @table.each do |index, values| %>
+			<tr>
+			<%= hidden_field_tag "table[#{index}][status]", values['status'] %>
+			<td><%= values['status'] %></td>
+
+			<%= hidden_field_tag "table[#{index}][date]", values['date'] %>
+			<td><%= values['date'] %></td>
+
+			<%= hidden_field_tag "table[#{index}][pm]", values['pm'] %>
+			<td><%= values['pm'] %></td>
+
+			<%= hidden_field_tag "table[#{index}][check]", values['check'] %>
+			<td><%= values['check'] %></td>
+
+			<%= hidden_field_tag "table[#{index}][what]", values['what'] %>
+			<td><%= values['what'] %></td>
+
+			<%= hidden_field_tag "table[#{index}][amount]", values['amount'] %>
+			<td><%= values['amount'] %></td>
+
+			<td><%= select_tag "table[#{index}][whatmap]", options_for_select(@whatlist, values['whatmap']) %></td>
+
+			<% if values['category'] > 0 %>
+				<% category = Category.find(values['category']) %>
+				<td><%= "#{category.ctype}/#{category.category}/#{category.subcategory}/#{category.tax}" %></td>
+			<% else %>
+				<td><%= select_tag "table[#{index}][category]", options_for_select(@categorylist, values['category']) %></td>
+			<% end %>
+
+			</tr>
+		<% end %>
+	</tbody>
+
+	</table>
+		
+	<div class='clearfix'><p>&nbsp;</p></div>
+
+	<%= submit_tag 'Save', class: 'btn btn-primary col-md-1' %>
+
+<% end %>

@@ -1,0 +1,21 @@
+<h1><%= @title %></h1>
+
+<table>
+
+<thead>
+<tr>
+<th>What</th>
+<th>Map</th>
+</tr>
+</thead>
+
+<tbody>
+<% @whatmaps.each do |whatmap| %>
+	<tr>
+	<th><%= whatmap.whatmap %></th>
+	<th><%= whatmap.what.what %></th>
+	</tr>
+<% end %>
+</tbody>
+
+</table>

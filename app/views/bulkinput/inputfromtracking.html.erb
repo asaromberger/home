@@ -1,0 +1,21 @@
+<h1><%= @title %></h1>
+
+File contains a series of lines with the following tab separated columns:
+<ul>
+<li>Date either as MM/DD/YYYY or YYYY-MM-DD</li>
+<li>+/-</li>
+<li>Check</li>
+<li>what</li>
+<li>Amount</li>
+</ul>
+
+<%#= form_tag new_bulkinput_path, method: :get, multipart: true do %>
+<%= form_tag bulkinput_index_path, multipart: true do %>
+
+<%= file_field_tag :document %>
+
+<div class='clearfix'><p>&nbsp;</p></div>
+
+<%= submit_tag 'Submit', class: 'btn btn-primary col_md_1' %>
+
+<% end %>
