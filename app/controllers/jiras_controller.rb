@@ -1,5 +1,8 @@
 class JirasController < ApplicationController
 
+	before_action :require_signed_in
+	before_action :require_jira
+
 	def index
 		@title = 'Jira'
 		@jiras = Jira.where("status != 'complete'").order('priority, id')
@@ -37,6 +40,10 @@ class JirasController < ApplicationController
 	end
 
 private
+
+	def require_jira
+		return has_role(current_user.id, 'jira')
+	end
 
 	def jira_params
 		params.require(:jira).permit(:summary, :status, :description, :priority)

@@ -3,16 +3,24 @@ Rails.application.routes.draw do
 	root 'sessions#new'
 
 	resources :sessions
+
 	resources :jiras
+
 	resources :users
+
 	resources :categories
+	match '/categoriesbulkinput', to: 'categories#bulkinput', via: :get
+	match '/categoriesbulkinputupdate', to: 'categories#bulkinputupdate', via: :get
+
 	resources :whats
+
 	resources :items
 
-	match '/signout', to: 'sessions#destroy', via: :delete
+	resources :bulkinput
+	match '/inputfromtracking', to: 'bulkinput#inputfromtracking', via: :get
+	match '/inputfromquicken', to: 'bulkinput#inputfromquicken', via: :get
 
-	match '/bulkinput', to: 'categories#bulkinput', via: :get
-	match '/bulkinputupdate', to: 'categories#bulkinputupdate', via: :get
+	match '/signout', to: 'sessions#destroy', via: :delete
 
 	match '/admin_roles', to: 'admin#roles', via: :get
 	match '/admin_roles_edit', to: 'admin#roles_edit', via: :get
