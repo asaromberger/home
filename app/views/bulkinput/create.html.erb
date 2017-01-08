@@ -15,7 +15,6 @@
 
 	<thead>
 	<tr>
-	<th>Status</th>
 	<th>Date</th>
 	<th>+/-</th>
 	<th>Check</th>
@@ -30,8 +29,6 @@
 	<tbody>
 		<% @table.each do |index, values| %>
 			<tr>
-			<%= hidden_field_tag "table[#{index}][status]", values['status'] %>
-			<td><%= values['status'] %></td>
 
 			<%= hidden_field_tag "table[#{index}][date]", values['date'] %>
 			<td><%= values['date'] %></td>
