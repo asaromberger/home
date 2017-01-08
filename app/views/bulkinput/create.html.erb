@@ -1,7 +1,7 @@
 <h1><%= @title %></h1>
 
 <% if @errors && @errors.count > 0 %>
-	Notes:
+	<b>Notes:</b>
 	<ul>
 	<% @errors.each do |error| %>
 		<li><%= error %></li>
@@ -21,6 +21,7 @@
 	<th>Check</th>
 	<th>What</th>
 	<th>Amount</th>
+	<th>Map To</th>
 	<th>Map</th>
 	<th>Category</th>
 	</tr>
@@ -41,19 +42,17 @@
 			<%= hidden_field_tag "table[#{index}][check]", values['check'] %>
 			<td><%= values['check'] %></td>
 
-			<td><%= text_field_tag "table[#{index}][what]", values['what'] %></td>
+			<%= hidden_field_tag "table[#{index}][what]", values['what'] %>
+			<td><%= values['what'] %></td>
 
 			<%= hidden_field_tag "table[#{index}][amount]", values['amount'] %>
 			<td><%= values['amount'] %></td>
 
-			<td><%= select_tag "table[#{index}][whatmap]", options_for_select(@whatlist, values['whatmap']) %></td>
+			<td><%= text_field_tag "table[#{index}][mapto]" %>
 
-			<% if values['category'] > 0 %>
-				<% category = Category.find(values['category']) %>
-				<td><%= "#{category.ctype}/#{category.category}/#{category.subcategory}/#{category.tax}" %></td>
-			<% else %>
-				<td><%= select_tag "table[#{index}][category]", options_for_select(@categorylist, values['category']) %></td>
-			<% end %>
+			<td><%= select_tag "table[#{index}][whatmap]", options_for_select(values['whatmaplist']) %></td>
+
+			<td><%= select_tag "table[#{index}][category]", options_for_select(@categorylist, values['category']) %></td>
 
 			</tr>
 		<% end %>
