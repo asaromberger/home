@@ -109,7 +109,6 @@ class BulkinputController < ApplicationController
 						@table[lineno]['what'] = what
 						@table[lineno]['amount'] = amount
 						@table[lineno]['whatmaplist'] = @whatlist
-						@table[lineno]['status'] = 'new'
 						@table[lineno]['category'] = 0
 					end
 					type = '';
@@ -186,7 +185,6 @@ class BulkinputController < ApplicationController
 						@table[lineno]['what'] = what
 						@table[lineno]['amount'] = amount
 						@table[lineno]['whatmaplist'] = @whatlist
-						@table[lineno]['status'] = 'new'
 						@table[lineno]['category'] = 0
 					end
 				else
@@ -204,7 +202,6 @@ class BulkinputController < ApplicationController
 		@table = Hash.new
 		lineno = 0
 		params[:table].each do |id, values|
-			status = values['status']
 			date = values['date']
 			pm = values['pm']
 			check = values['check']
@@ -277,7 +274,6 @@ class BulkinputController < ApplicationController
 				WhatMap.where("whatmap = ?", what).each do |wl|
 					@table[lineno]['whatmaplist'].push([wl.what.what, wl.what_id])
 				end
-				@table[lineno]['status'] = 'new'
 				twhat = What.where("what = ?", what)
 				if twhat.count > 0
 					@errors.push("#{date} #{what} #{twhat.first.category_id}")
