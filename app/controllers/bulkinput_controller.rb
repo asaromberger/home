@@ -276,7 +276,6 @@ class BulkinputController < ApplicationController
 				end
 				twhat = What.where("what = ?", what)
 				if twhat.count > 0
-					@errors.push("#{date} #{what} #{twhat.first.category_id}")
 					@table[lineno]['category'] = twhat.first.category_id
 				else
 					@table[lineno]['category'] = 0
