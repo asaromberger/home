@@ -47,7 +47,7 @@
 
 			<td><%= text_field_tag "table[#{index}][mapto]" %>
 
-			<td><%= select_tag "table[#{index}][whatmap]", options_for_select(values['whatmaplist']) %></td>
+			<td><%= select_tag "table[#{index}][whatmap]", options_for_select(values['whatmaplist'], values['whatmap']) %></td>
 
 			<td><%= select_tag "table[#{index}][category]", options_for_select(@categorylist, values['category']) %></td>
 
