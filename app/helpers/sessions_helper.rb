@@ -32,7 +32,7 @@ module SessionsHelper
 
 	def require_signed_in
 		unless signed_in?
-			redirect_to signin_url, notice: "Please sign in"
+			redirect_to new_session_path, notice: "Please sign in"
 		end
 	end
 
