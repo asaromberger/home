@@ -106,6 +106,11 @@ class BulkinputController < ApplicationController
 						WhatMap.where("whatmap = ?", what).each do |wl|
 							@table[lineno]['whatmaplist'].push([wl.what.what, wl.id])
 						end
+						if @table[lineno]['whatmaplist'].count == 2
+							@table[lineno]['whatmap'] = @table[lineno]['whatmaplist'][1][1]
+						else
+							@table[lineno]['whatmap'] = 0
+						end
 						twhat = What.where("what = ?", what)
 						if twhat.count > 0
 							@table[lineno]['category'] = twhat.first.category_id
@@ -185,6 +190,11 @@ class BulkinputController < ApplicationController
 						@table[lineno]['whatmaplist'] = [['', 0]]
 						WhatMap.where("whatmap = ?", what).each do |wl|
 							@table[lineno]['whatmaplist'].push([wl.what.what, wl.id])
+						end
+						if @table[lineno]['whatmaplist'].count == 2
+							@table[lineno]['whatmap'] = @table[lineno]['whatmaplist'][1][1]
+						else
+							@table[lineno]['whatmap'] = 0
 						end
 						twhat = What.where("what = ?", what)
 						if twhat.count > 0
@@ -281,6 +291,11 @@ class BulkinputController < ApplicationController
 				@table[lineno]['whatmaplist'] = [['', 0]]
 				WhatMap.where("whatmap = ?", what).each do |wl|
 					@table[lineno]['whatmaplist'].push([wl.what.what, wl.what_id])
+				end
+				if @table[lineno]['whatmaplist'].count == 2
+					@table[lineno]['whatmap'] = @table[lineno]['whatmaplist'][1][1]
+				else
+					@table[lineno]['whatmap'] = 0
 				end
 				twhat = What.where("what = ?", what)
 				if twhat.count > 0
