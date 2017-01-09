@@ -89,14 +89,8 @@ class BulkinputController < ApplicationController
 							what_ids = [0]
 						end
 					end
-					@whatlist = [['', 0]]
-					whatlist.each do |wl|
-						@whatlist.push([wl.whatmap, wl.id])
-					end
 					item = Item.where("date = ? AND pm = ? and checkno = ? and what_id IN (?) AND amount = ?", date, pm, check, what_ids, amount)
-					if item.count > 0
-						@errors.push("EXISTS: #{date} #{item.first.what.what} #{amount}")
-					else
+					if item.count == 0
 						lineno = lineno + 1
 						if lineno > maxlineno
 							@errors.push("Limited to #{maxlineno} lines at a time")
@@ -108,8 +102,18 @@ class BulkinputController < ApplicationController
 						@table[lineno]['check'] = check
 						@table[lineno]['what'] = what
 						@table[lineno]['amount'] = amount
-						@table[lineno]['whatmaplist'] = @whatlist
-						@table[lineno]['category'] = 0
+						@table[lineno]['whatmaplist'] = [['', 0]]
+						WhatMap.where("whatmap = ?", what).each do |wl|
+							@table[lineno]['whatmaplist'].push([wl.whatmap, wl.id])
+						end
+						twhat = What.where("what = ?", what)
+						if twhat.count > 0
+							@table[lineno]['category'] = twhat.first.category_id
+						else
+							@table[lineno]['category'] = 0
+						end
+					else
+						@errors.push("EXISTS: #{date} #{item.first.what.what} #{amount}")
 					end
 					type = '';
 					date = '';
@@ -165,14 +169,8 @@ class BulkinputController < ApplicationController
 							what_id = [0]
 						end
 					end
-					@whatlist = [['', 0]]
-					whatlist.each do |wl|
-						@whatlist.push([wl.whatmap, wl.id])
-					end
 					item = Item.where("date = ? AND pm = ? and checkno = ? and what_id IN (?) AND amount = ?", date, pm, check, what_ids, amount)
-					if item.count > 0
-						@errors.push("EXISTS: #{date} #{item.first.what.what} #{amount}")
-					else
+					if item.count == 0
 						lineno = lineno + 1
 						if lineno > maxlineno
 							@errors.push("Limited to #{maxlineno} lines at a time")
@@ -184,8 +182,18 @@ class BulkinputController < ApplicationController
 						@table[lineno]['check'] = check
 						@table[lineno]['what'] = what
 						@table[lineno]['amount'] = amount
-						@table[lineno]['whatmaplist'] = @whatlist
-						@table[lineno]['category'] = 0
+						@table[lineno]['whatmaplist'] = [['', 0]]
+						WhatMap.where("whatmap = ?", what).each do |wl|
+							@table[lineno]['whatmaplist'].push([wl.whatmap, wl.id])
+						end
+						twhat = What.where("what = ?", what)
+						if twhat.count > 0
+							@table[lineno]['category'] = twhat.first.category_id
+						else
+							@table[lineno]['category'] = 0
+						end
+					else
+						@errors.push("EXISTS: #{date} #{item.first.what.what} #{amount}")
 					end
 				else
 					@errors.push("BAD LINE: #{line}")
@@ -291,7 +299,7 @@ class BulkinputController < ApplicationController
 		if @table.count > 0
 			render action: :create
 		else
-			redirect_to inputfromtracking_path, notice: "Entry Complete"
+			redirect_to edit_bulkinput_path(id: 0), notice: "Entry Complete"
 		end
 	end
 
