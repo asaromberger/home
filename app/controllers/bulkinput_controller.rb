@@ -104,7 +104,7 @@ class BulkinputController < ApplicationController
 						@table[lineno]['amount'] = amount
 						@table[lineno]['whatmaplist'] = [['', 0]]
 						WhatMap.where("whatmap = ?", what).each do |wl|
-							@table[lineno]['whatmaplist'].push([wl.whatmap, wl.id])
+							@table[lineno]['whatmaplist'].push([wl.what.what, wl.id])
 						end
 						twhat = What.where("what = ?", what)
 						if twhat.count > 0
@@ -184,7 +184,7 @@ class BulkinputController < ApplicationController
 						@table[lineno]['amount'] = amount
 						@table[lineno]['whatmaplist'] = [['', 0]]
 						WhatMap.where("whatmap = ?", what).each do |wl|
-							@table[lineno]['whatmaplist'].push([wl.whatmap, wl.id])
+							@table[lineno]['whatmaplist'].push([wl.what.what, wl.id])
 						end
 						twhat = What.where("what = ?", what)
 						if twhat.count > 0
