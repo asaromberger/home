@@ -5,8 +5,17 @@ class ItemsController < ApplicationController
 
 	def index
 		@title = 'Year Expenses'
-		@year = '2016'
+		if params[:year]
+			@year = params[:year]
+		else
+			@year = Time.now.year
+		end
 		@items = Item.where("EXTRACT(year FROM date) = ?", @year).order('date')
+		@years = []
+		Item.all.pluck("DISTINCT EXTRACT(year FROM date)").each do |year|
+			@years.push(year.to_i)
+		end
+		@years = @years.sort
 	end
 
 	def new

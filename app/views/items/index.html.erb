@@ -1,5 +1,16 @@
 <h1><%= @title %></h1>
 
+<div class='dropdown'>
+	<a href='#' data-toggle='dropdown' class='dropdown-toggle'>Choose Year <b class='caret'></b></a>
+	<ul class='dropdown-menu'>
+		<% @years.each do |year| %>
+			<li><%= link_to year, items_path(year: year) %></li>
+		<% end %>
+	</ul>
+</div>
+
+<div class='clearfix'><p>&nbsp;</p></div>
+
 <%= link_to 'Add', new_item_path(year: @year), method: :get %>
 
 <h2><%= @year %></h2>
