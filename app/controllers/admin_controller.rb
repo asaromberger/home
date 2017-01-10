@@ -38,7 +38,7 @@ class AdminController < ApplicationController
 				end
 			else
 				p = Permission.where("user_id = ? and pkey = ?", @user.id, role)
-				if p.count
+				if p.count > 0
 					p.first.delete
 				end
 			end
@@ -60,7 +60,9 @@ class AdminController < ApplicationController
 private
 	
 	def require_admin
-		return has_role(current_user.id, 'admin')
+		unless has_role(current_user.id, 'admin')
+			redirect_to root_url, alert: "inadequate permissions"
+		end
 	end
 
 end

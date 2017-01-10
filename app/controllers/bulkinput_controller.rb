@@ -325,7 +325,9 @@ class BulkinputController < ApplicationController
 private
 
 	def require_expenses
-		return has_role(current_user.id, 'expenses')
+		unless has_role(current_user.id, 'expenses')
+			redirect_to root_url, alert: "inadequate permissions"
+		end
 	end
 
 end

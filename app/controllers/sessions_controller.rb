@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
 		user = User.find_by(signin: params[:session][:signin].downcase)
 		if user && user.authenticate(params[:session][:password])
 			  sign_in user
-			  redirect_to jiras_path, notice: "Welcome #{user.signin}"
+			  redirect_to users_path, notice: "Welcome #{user.signin}"
 		else
 			  redirect_to new_session_path, alert: "Invalid signin/password combination"
 		end
