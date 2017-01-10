@@ -219,6 +219,7 @@ class BulkinputController < ApplicationController
 		@errors = []
 		@table = Hash.new
 		lineno = 0
+		if params[:table]
 		params[:table].each do |id, values|
 			date = values['date']
 			pm = values['pm']
@@ -311,6 +312,7 @@ class BulkinputController < ApplicationController
 		Category.all.order('ctype, category, subcategory, tax').each do |category|
 			@categorylist.push(["#{category.ctype}/#{category.category}/#{category.subcategory}/#{category.tax}", category.id])
 		end
+		end # if params[:input]
 		if @table.count > 0
 			render action: :create
 		else
