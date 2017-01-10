@@ -42,7 +42,9 @@ class JirasController < ApplicationController
 private
 
 	def require_jira
-		return has_role(current_user.id, 'jira')
+		unless has_role(current_user.id, 'jira')
+			redirect_to root_url, alert: "inadequate permissions"
+		end
 	end
 
 	def jira_params
