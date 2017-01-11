@@ -4,12 +4,12 @@ class YearbudgetController < ApplicationController
 	before_action :require_expenses
 
 	def index
-		@title = 'Year Budget'
 		if params[:year]
 			@year = params[:year]
 		else
 			@year = Time.now.year
 		end
+		@title = "#{@year} Budget"
 		@years = []
 		Item.all.pluck("DISTINCT EXTRACT(year FROM date)").each do |year|
 			@years.push(year.to_i)
@@ -17,6 +17,7 @@ class YearbudgetController < ApplicationController
 		@years = @years.sort
 		# @data[ctype][category][subcategory][month]
 		@data = Hash.new
+		@ctotals = Hash.new
 		Item.joins(:what => :category).where("EXTRACT(year FROM date) = ?", @year).each do |item|
 			ctype = item.what.category.ctype
 			category = item.what.category.category
@@ -26,8 +27,12 @@ class YearbudgetController < ApplicationController
 			if item.pm = '-'
 				amount = -amount
 			end
+			# accumulate in cat/subcat/month
 			if ! @data[ctype]
 				@data[ctype] = Hash.new
+			end
+			if ! @ctotals[ctype]
+				@ctotals[ctype] = Hash.new
 			end
 			if ! @data[ctype][category]
 				@data[ctype][category] = Hash.new
@@ -40,42 +45,50 @@ class YearbudgetController < ApplicationController
 			else
 				@data[ctype][category][subcategory][month] = amount
 			end
+			# accumulate in cat/subcat/total
 			if @data[ctype][category][subcategory]['total']
 				@data[ctype][category][subcategory]['total'] = @data[ctype][category][subcategory]['total'] + amount
 			else
 				@data[ctype][category][subcategory]['total'] = amount
 			end
+			# accumulate in cat totals
+			if ! @data[ctype][category]['~']
+				@data[ctype][category]['~'] = Hash.new
+			end
+			if @data[ctype][category]['~'][month]
+				@data[ctype][category]['~'][month] = @data[ctype][category]['~'][month] + amount
+			else
+				@data[ctype][category]['~'][month] = amount
+			end
+			# accumulate in cat/total
+			if @data[ctype][category]['~']['total']
+				@data[ctype][category]['~']['total'] = @data[ctype][category]['~']['total'] + amount
+			else
+				@data[ctype][category]['~']['total'] = amount
+			end
+			# accumulate in ctotals
+			if @ctotals[ctype][month]
+				@ctotals[ctype][month] = @ctotals[ctype][month] + amount
+			else
+				@ctotals[ctype][month] = amount
+			end
+			if @ctotals[ctype]['total']
+				@ctotals[ctype]['total'] = @ctotals[ctype]['total'] + amount
+			else
+				@ctotals[ctype]['total'] = amount
+			end
 		end
+		# averages
 		@data.each do |ctype, ctypedata|
 			ctypedata.each do |cat, catdata|
-			#	cattot = Hash.new
-			#	12.times do |month|
-			#		cattot[month] = 0
-			#	end
 				catdata.each do |subcat, subcatdata|
 					@data[ctype][cat][subcat]['average'] = @data[ctype][cat][subcat]['total'] / 12
-			#		12.times do |month|
-			#			cattot[month + 1] = cattot[month + 1] + @data[ctype][cat][subcat][month + 1]
-			#		end
 				end
 			end
 		end
-	end
-
-	def new
-	fail
-	end
-
-	def create
-	fail
-	end
-
-	def edit
-	fail
-	end
-
-	def update
-	fail
+		@ctotals.each do |ctype, ctypedata|
+			@ctotals[ctype]['average'] = @ctotals[ctype]['total'] / 12
+		end
 	end
 
 private

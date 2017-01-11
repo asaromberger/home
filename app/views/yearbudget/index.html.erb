@@ -1,3 +1,14 @@
+<style>
+.boldright {
+	font-weight: bold;
+	text-align: right;
+}
+.boldcenter {
+	font-weight: bold;
+	text-align: center;
+}
+</style>
+
 <h1><%= @title %></h1>
 
 <div class='dropdown'>
@@ -44,15 +55,30 @@
 			<tr>
 			<td><%= tcat %></td>
 			<% tcat = '' %>
-			<td><%= subcat %></td>
-			<% 12.times do |month| %>
-				<td align='right'><%= number_with_precision(subcatdata[month + 1], precision: 2) %></td>
+			<% if subcat == '~' %>
+				<% tsubcat = 'Total' %>
+				<% tclass = "class='boldright'".html_safe %>
+			<% else %>
+				<% tsubcat = subcat %>
+				<% tclass = "" %>
 			<% end %>
-			<td align='right'><%= number_with_precision(subcatdata['total'], precision: 2) %></td>
-			<td align='right'><%= number_with_precision(subcatdata['average'], precision: 2) %></td>
+			<td <%= tclass %> ><%= tsubcat %></td>
+			<% 12.times do |month| %>
+				<td align='right' <%= tclass %> ><%= number_with_precision(subcatdata[month + 1], precision: 2) %></td>
+			<% end %>
+			<td align='right' <%= tclass %> ><%= number_with_precision(subcatdata['total'], precision: 2) %></td>
+			<td align='right' <%= tclass %> ><%= number_with_precision(subcatdata['average'], precision: 2) %></td>
 			</tr>
 		<% end %>
 	<% end %>
+	<tr>
+	<td colspan=2 class='boldcenter'>TOTAL</th>
+	<% 12.times do |month| %>
+		<td class='boldright'><%= number_with_precision(@ctotals[ctype][month + 1], precision: 2) %></td>
+	<% end %>
+	<td class='boldright'><%= number_with_precision(@ctotals[ctype]['total'], precision: 2) %></td>
+	<td class='boldright'><%= number_with_precision(@ctotals[ctype]['average'], precision: 2) %></td>
+	</tr>
 	</tbody>
 
 	</table>
