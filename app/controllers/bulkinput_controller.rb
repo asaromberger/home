@@ -320,10 +320,6 @@ class BulkinputController < ApplicationController
 		end
 	end
 
-	def update
-	fail
-	end
-
 private
 
 	def require_expenses

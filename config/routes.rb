@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 	root 'sessions#new'
 
 	resources :sessions
+	match '/signout', to: 'sessions#destroy', via: :delete
 
 	resources :jiras
 
@@ -22,7 +23,7 @@ Rails.application.routes.draw do
 	match '/inputfromtracking', to: 'bulkinput#inputfromtracking', via: :get
 	match '/inputfromquicken', to: 'bulkinput#inputfromquicken', via: :get
 
-	match '/signout', to: 'sessions#destroy', via: :delete
+	resources :yearbudget
 
 	match '/admin_roles', to: 'admin#roles', via: :get
 	match '/admin_roles_edit', to: 'admin#roles_edit', via: :get

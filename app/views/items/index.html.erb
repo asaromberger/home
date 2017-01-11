@@ -40,7 +40,7 @@
 	<td><%= item.pm %></td>
 	<td><%= item.checkno %></td>
 	<td><%= item.what.what %></td>
-	<td><%= item.amount %></td>
+	<td align='right'><%= number_with_precision(item.amount, precision: 2) %></td>
 	<td><%= item.what.category.ctype %></td>
 	<td><%= item.what.category.category %></td>
 	<td><%= item.what.category.subcategory %></td>
