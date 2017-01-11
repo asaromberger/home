@@ -4,12 +4,12 @@ class ItemsController < ApplicationController
 	before_action :require_expenses
 
 	def index
-		@title = 'Year Expenses'
 		if params[:year]
 			@year = params[:year]
 		else
 			@year = Time.now.year
 		end
+		@title = "#{@year} Expenses"
 		@items = Item.where("EXTRACT(year FROM date) = ?", @year).order('date')
 		@years = []
 		Item.all.pluck("DISTINCT EXTRACT(year FROM date)").each do |year|
@@ -21,6 +21,7 @@ class ItemsController < ApplicationController
 	def new
 		@title = 'New Item'
 		@item = Item.new
+		@item.date = Date.new(params[:year].to_i, 1, 1)
 		@whats = What.all.order('what')
 	end
 

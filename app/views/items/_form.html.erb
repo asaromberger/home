@@ -1,27 +1,27 @@
 <%= form_for(@item) do |form| %>
 
 	<%= form.label :date, class: 'col-md-2' %>
-	<%= form.date_select :date, {start_year: 1988, value: @item.date}, {class: 'date-select col-md-10'} %>
+	<%= form.date_select :date, {start_year: 1988, value: @item.date}, {class: 'date-select col-md-1'} %>
 
 	<div class='clearfix'></div>
 
 	<%= form.label '+/i', class: 'col-md-2' %>
-	<%= form.select :pm, [['+'], ['-']], {}, class: 'col-md-10' %>
+	<%= form.select :pm, [['+'], ['-']], {}, class: 'col-md-1' %>
 
 	<div class='clearfix'></div>
 
 	<%= form.label :checkno, class: 'col-md-2' %>
-	<%= form.text_field :checkno, class: 'col-md-10' %>
+	<%= form.text_field :checkno, class: 'col-md-2' %>
 
 	<div class='clearfix'></div>
 
 	<%= form.label 'What', class: 'col-md-2' %>
-	<%= form.select :what_id, @whats.collect {|what| [what.what, what.id]}, {}, class: 'col-md-10' %>
+	<%= form.select :what_id, @whats.collect {|what| [what.what, what.id]} %>
 
 	<div class='clearfix'></div>
 
 	<%= form.label :amount, class: 'col-md-2' %>
-	<%= form.number_field :amount, class: 'col-md-10' %>
+	<%= form.number_field :amount, class: 'col-md-2' %>
 
 	<div class='clearfix'></div>
 
