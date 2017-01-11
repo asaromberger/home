@@ -1,0 +1,12 @@
+<h1><%= @title %></h1>
+
+<%= form_for(@user) do |form| %>
+
+	<%= form.label :signin %>
+	<%= form.text_field :signin %>
+
+	<div class='clearfix'><p>&nbsp;</p></div>
+
+	<%= form.submit "Save name", class: 'btn btn-large btn-primary' %>
+
+<% end %>

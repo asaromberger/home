@@ -1,18 +1,21 @@
 class UsersController < ApplicationController
 
 	before_action :require_signed_in
-	before_action :require_admin, except: [:index]
+	before_action :require_admin, only: [:new, :create]
 
+	# landing page
 	def index
 		@user = current_user
 		@title = "Welcome #{@user.signin}"
 	end
 
+	# Admin / Add a User
 	def new
 		@title = 'New User'
 		@user = User.new
 	end
 
+	# Admin / Add a User
 	def create
 		@user = User.new(new_user_params)
 		@user.save
@@ -20,11 +23,21 @@ class UsersController < ApplicationController
 	end
 
 	def edit
-		fail
+		@title = 'Edit Sign in Name'
+		@user = User.find(params[:id])
+		unless @user.id == current_user.id
+			redirect_to root_url, alert: "inadequate permissions"
+		end
 	end
 
 	def update
-		fail
+		@user = User.find(params[:id])
+		unless @user.id == current_user.id
+			redirect_to root_url, alert: "inadequate permissions"
+		end
+		@user.signin = params[:user][:signin]
+		@user.save
+		redirect_to users_path, notice: "Sign in reset to #{@user.signin}"
 	end
 
 private
