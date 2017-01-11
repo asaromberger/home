@@ -7,6 +7,8 @@ Rails.application.routes.draw do
 	resources :jiras
 
 	resources :users
+	match '/users_password_reset', to: 'users#password_reset', via: :get
+	match '/users_password_reset_update', to: 'users#password_reset_update', via: :put
 
 	resources :categories
 	match '/categoriesbulkinput', to: 'categories#bulkinput', via: :get
