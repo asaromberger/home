@@ -1,0 +1,77 @@
+<style>
+.boldright {
+	font-weight: bold;
+	text-align: right;
+}
+.boldcenter {
+	font-weight: bold;
+	text-align: center;
+}
+</style>
+
+<h1><%= @title %></h1>
+
+<div class='dropdown'>
+	<a href='#' data-toggle='dropdown' class='dropdown-toggle'>Choose Year <b class='caret'></b></a>
+	<ul class='dropdown-menu'>
+		<% @years.each do |year| %>
+			<li><%= link_to year, yearbudget_index_path(year: year) %></li>
+		<% end %>
+	</ul>
+</div>
+
+<div class='clearfix'><p>&nbsp;</p></div>
+
+<% @data.sort.each do |ctype, ctypedata| %>
+	<h2><%= ctype %></h2>
+
+	<table class='table-bordered table-striped'>
+
+	<thead>
+	<tr>
+	<th>Cat</th>
+	<th>Subcat</th>
+	<% @years.each do |year| %>
+		<th><%= year %></th>
+	<% end %>
+	<th>Total</th>
+	<th>Avg/Mo</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	<% ctypedata.sort.each do |cat, catdata| %>
+		<% tcat = cat %>
+		<% catdata.sort.each do |subcat, subcatdata| %>
+			<tr>
+			<td><%= tcat %></td>
+			<% tcat = '' %>
+			<% if subcat == '~' %>
+				<% tsubcat = 'Total' %>
+				<% tclass = "class='boldright'".html_safe %>
+			<% else %>
+				<% tsubcat = subcat %>
+				<% tclass = "" %>
+			<% end %>
+			<td <%= tclass %> ><%= tsubcat %></td>
+			<% @years.each do |year| %>
+				<td align='right' <%= tclass %> ><%= number_with_precision(subcatdata[year], precision: 2) %></td>
+			<% end %>
+			<td align='right' <%= tclass %> ><%= number_with_precision(subcatdata['total'], precision: 2) %></td>
+			<td align='right' <%= tclass %> ><%= number_with_precision(subcatdata['average'], precision: 2) %></td>
+			</tr>
+		<% end %>
+	<% end %>
+	<tr>
+	<td colspan=2 class='boldcenter'>TOTAL</th>
+	<% @years.each do |year| %>
+		<td class='boldright'><%= number_with_precision(@ctotals[ctype][year], precision: 2) %></td>
+	<% end %>
+	<td class='boldright'><%= number_with_precision(@ctotals[ctype]['total'], precision: 2) %></td>
+	<td class='boldright'><%= number_with_precision(@ctotals[ctype]['average'], precision: 2) %></td>
+	</tr>
+	</tbody>
+
+	</table>
+<% end %>
+
