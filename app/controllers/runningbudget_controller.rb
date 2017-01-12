@@ -19,7 +19,7 @@ class RunningbudgetController < ApplicationController
 			subcategory = item.what.category.subcategory
 			amount = item.amount
 			year = item.date.year
-			if item.pm = '-'
+			if item.pm == '-'
 				amount = -amount
 			end
 			# accumulate in cat/subcat/year
