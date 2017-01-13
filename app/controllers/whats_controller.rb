@@ -40,8 +40,14 @@ class WhatsController < ApplicationController
 
 	def destroy
 		@what = What.find(params[:id])
-		@what.delete
-		redirect_to whats_path, notice: "What Map #{@what.what} Deleted"
+		if Item.where("what_id = ?", @what.id).count > 0
+			redirect_to whats_path, alert: "What #{@what.what} is in use by an Item"
+		elsif WhatMap.where("what_id = ?", @what.id).count > 0
+			redirect_to whats_path, alert: "What #{@what.what} is in use by a WhatMap"
+		else
+			@what.delete
+			redirect_to whats_path, notice: "What #{@what.what} Deleted"
+		end
 	end
 
 private
