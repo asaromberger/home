@@ -38,8 +38,12 @@ class CategoriesController < ApplicationController
 
 	def destroy
 		@category = Category.find(params[:id])
-		@category.delete
-		redirect_to categories_path, notice: "Category #{@category.ctype}/#{@category.category}/#{@category.subcategory}/#{@category.tax} Deleted"
+		if What.where("category_id = ?", @category.id).count > 0
+			redirect_to categories_path, alert: "Category #{@category.ctype}/#{@category.category}/#{@category.subcategory}/#{@category.tax} is in use by a What"
+		else
+			@category.delete
+			redirect_to categories_path, notice: "Category #{@category.ctype}/#{@category.category}/#{@category.subcategory}/#{@category.tax} Deleted"
+		end
 	end
 
 	def bulkinput
