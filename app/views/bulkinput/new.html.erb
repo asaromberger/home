@@ -1,5 +1,9 @@
 <h1><%= @title %></h1>
 
+<% if @exist > 0 %>
+	<h4>Found <%= @exist %> Items that already exist</h4>
+<% end %>
+
 <% if @errors && @errors.count > 0 %>
 	<b>Notes:</b>
 	<ul>
@@ -10,6 +14,8 @@
 <% end %>
 
 <%= form_tag new_bulkinput_path, method: :get do %>
+
+	<%= hidden_field_tag :document, @document %>
 
 	<table>
 
