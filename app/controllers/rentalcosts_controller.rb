@@ -24,16 +24,15 @@ class RentalcostsController < ApplicationController
 		(@fromyear..@toyear).each do |year|
 			@years.push(year.to_i)
 		end
-		# @data[ctype][category][subcategory][year]
+		# @data[category][subcategory][year]
 		@data = Hash.new
 		Item.joins(:what => :category).where("ctype = 'business' AND EXTRACT(year FROM date) >= ? AND EXTRACT(year FROM date) <= ?", @fromyear, @toyear).each do |item|
-			ctype = item.what.category.ctype
 			category = item.what.category.category
 			if category != '33rd' && category != 'Fairview'
 				next
 			end
 			subcategory = item.what.category.subcategory
-			if subcategory == 'Rent'
+			if subcategory == 'Rent' || subcategory == 'Security Deposit'
 				next
 			end
 			amount = item.amount
@@ -42,48 +41,43 @@ class RentalcostsController < ApplicationController
 				amount = -amount
 			end
 			# accumulate in cat/subcat/year
-			if ! @data[ctype]
-				@data[ctype] = Hash.new
+			if ! @data[category]
+				@data[category] = Hash.new
 			end
-			if ! @data[ctype][category]
-				@data[ctype][category] = Hash.new
+			if ! @data[category][subcategory]
+				@data[category][subcategory] = Hash.new
 			end
-			if ! @data[ctype][category][subcategory]
-				@data[ctype][category][subcategory] = Hash.new
-			end
-			if @data[ctype][category][subcategory][year]
-				@data[ctype][category][subcategory][year] = @data[ctype][category][subcategory][year] + amount
+			if @data[category][subcategory][year]
+				@data[category][subcategory][year] = @data[category][subcategory][year] + amount
 			else
-				@data[ctype][category][subcategory][year] = amount
+				@data[category][subcategory][year] = amount
 			end
 			# accumulate in cat/subcat/total
-			if @data[ctype][category][subcategory]['total']
-				@data[ctype][category][subcategory]['total'] = @data[ctype][category][subcategory]['total'] + amount
+			if @data[category][subcategory]['total']
+				@data[category][subcategory]['total'] = @data[category][subcategory]['total'] + amount
 			else
-				@data[ctype][category][subcategory]['total'] = amount
+				@data[category][subcategory]['total'] = amount
 			end
 			# accumulate in cat totals
-			if ! @data[ctype][category]['~']
-				@data[ctype][category]['~'] = Hash.new
+			if ! @data[category]['~']
+				@data[category]['~'] = Hash.new
 			end
-			if @data[ctype][category]['~'][year]
-				@data[ctype][category]['~'][year] = @data[ctype][category]['~'][year] + amount
+			if @data[category]['~'][year]
+				@data[category]['~'][year] = @data[category]['~'][year] + amount
 			else
-				@data[ctype][category]['~'][year] = amount
+				@data[category]['~'][year] = amount
 			end
 			# accumulate in cat/total
-			if @data[ctype][category]['~']['total']
-				@data[ctype][category]['~']['total'] = @data[ctype][category]['~']['total'] + amount
+			if @data[category]['~']['total']
+				@data[category]['~']['total'] = @data[category]['~']['total'] + amount
 			else
-				@data[ctype][category]['~']['total'] = amount
+				@data[category]['~']['total'] = amount
 			end
 		end
 		# averages
-		@data.each do |ctype, ctypedata|
-			ctypedata.each do |cat, catdata|
-				catdata.each do |subcat, subcatdata|
-					@data[ctype][cat][subcat]['average'] = @data[ctype][cat][subcat]['total'] / @years.count
-				end
+		@data.each do |cat, catdata|
+			catdata.each do |subcat, subcatdata|
+				@data[cat][subcat]['average'] = @data[cat][subcat]['total'] / @years.count
 			end
 		end
 	end

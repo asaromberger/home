@@ -31,45 +31,72 @@
 
 <div class='clearfix'><p>&nbsp;</p></div>
 
-<% @data.sort.each do |ctype, ctypedata| %>
+<% @data.sort.each do |cat, catdata| %>
 
-	<% ctypedata.sort.each do |cat, catdata| %>
+	<h2><%= cat %></h2>
 
-		<h2><%= cat %></h2>
+	<table class='table-bordered table-striped'>
 
-		<table class='table-bordered table-striped'>
+	<thead>
+	<tr>
+	<th>Subcat</th>
+	<% @years.each do |year| %>
+		<th><%= year %></th>
+	<% end %>
+	<th>Total</th>
+	<th>Avg/Year</th>
+	</tr>
+	</thead>
 
-		<thead>
-		<tr>
-		<th>Subcat</th>
-		<% @years.each do |year| %>
-			<th><%= year %></th>
-		<% end %>
-		<th>Total</th>
-		<th>Avg/Year</th>
-		</tr>
-		</thead>
-
-		<tbody>
-		<% catdata.sort.each do |subcat, subcatdata| %>
+	<tbody>
+	<% catdata.sort.each do |subcat, subcatdata| %>
+		<% if subcat != 'Upkeep' %>
 			<tr>
 			<% if subcat == '~' %>
 				<% tsubcat = 'Total' %>
 				<% tclass = "class='boldright'".html_safe %>
+				<td class='boldright'>Total</td>
+				<% @years.each do |year| %>
+					<% if catdata['Upkeep'][year] %>
+						<% t = subcatdata[year] - catdata['Upkeep'][year] %>
+					<% else %>
+						<% t = 0 %>
+					<% end %>
+					<td class='boldright'><%= number_with_precision(t, precision: 2) %></td>
+				<% end %>
+				<% if catdata['Upkeep']['total'] %>
+					<% t = subcatdata['total'] - catdata['Upkeep']['total'] %>
+				<% else %>
+					<% t = 0 %>
+				<% end %>
+				<td class='boldright'><%= number_with_precision(t, precision: 2) %></td>
+				<% if catdata['Upkeep']['average'] %>
+					<% t = subcatdata['average'] - catdata['Upkeep']['average'] %>
+				<% else %>
+					<% t = 0 %>
+				<% end %>
+				<td class='boldright'><%= number_with_precision(t, precision: 2) %></td>
 			<% else %>
-				<% tsubcat = subcat %>
-				<% tclass = "" %>
+				<td><%= subcat %></td>
+				<% @years.each do |year| %>
+					<td align='right'><%= number_with_precision(subcatdata[year], precision: 2) %></td>
+				<% end %>
+				<td align='right'><%= number_with_precision(subcatdata['total'], precision: 2) %></td>
+				<td align='right'><%= number_with_precision(subcatdata['average'], precision: 2) %></td>
 			<% end %>
-			<td <%= tclass %> ><%= tsubcat %></td>
-			<% @years.each do |year| %>
-				<td align='right' <%= tclass %> ><%= number_with_precision(subcatdata[year], precision: 2) %></td>
-			<% end %>
-			<td align='right' <%= tclass %> ><%= number_with_precision(subcatdata['total'], precision: 2) %></td>
-			<td align='right' <%= tclass %> ><%= number_with_precision(subcatdata['average'], precision: 2) %></td>
 			</tr>
 		<% end %>
-		</tbody>
-
-		</table>
 	<% end %>
+	<tr>
+	<% subcatdata = catdata['Upkeep'] %>
+	<td>Upkeep</td>
+	<% @years.each do |year| %>
+		<td align='right'><%= number_with_precision(subcatdata[year], precision: 2) %></td>
+	<% end %>
+	<td align='right'><%= number_with_precision(subcatdata['total'], precision: 2) %></td>
+	<td align='right'><%= number_with_precision(subcatdata['average'], precision: 2) %></td>
+	</tr>
+	</tbody>
+
+	</table>
 <% end %>
