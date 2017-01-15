@@ -27,6 +27,8 @@ Rails.application.routes.draw do
 
 	resources :runningbudget
 
+	resources :rentalcosts
+
 	match '/admin_roles', to: 'admin#roles', via: :get
 	match '/admin_roles_edit', to: 'admin#roles_edit', via: :get
 	match '/admin_roles_update', to: 'admin#roles_update', via: :get
