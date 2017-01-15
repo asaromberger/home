@@ -12,10 +12,19 @@
 <h1><%= @title %></h1>
 
 <div class='dropdown'>
-	<a href='#' data-toggle='dropdown' class='dropdown-toggle'>Choose Year <b class='caret'></b></a>
+	<a href='#' data-toggle='dropdown' class='dropdown-toggle'>From Year <b class='caret'></b></a>
 	<ul class='dropdown-menu'>
-		<% @years.each do |year| %>
-			<li><%= link_to year, yearbudget_index_path(year: year) %></li>
+		<% @pickyears.each do |year| %>
+			<li><%= link_to year, runningbudget_index_path(fromyear: year, toyear: @toyear) %></li>
+		<% end %>
+	</ul>
+</div>
+
+<div class='dropdown'>
+	<a href='#' data-toggle='dropdown' class='dropdown-toggle'>To Year <b class='caret'></b></a>
+	<ul class='dropdown-menu'>
+		<% @pickyears.each do |year| %>
+			<li><%= link_to year, runningbudget_index_path(fromyear: @fromyear, toyear:year) %></li>
 		<% end %>
 	</ul>
 </div>
