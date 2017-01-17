@@ -122,26 +122,32 @@ class BulkinputController < ApplicationController
 						month = '01'
 						day = '01'
 						year = '1000'
+						next
 					end
 					date = "#{year}-#{month}-#{day}"
 					input = Input.new
 					input.date = date
-					input.pm = pm
-					input.checkno = check
-					input.what = what
-					input.amount = amount
-					input.save
+					if input.date.blank?
+						@errors.push("BAD DATE: #{date}")
+					else
+						input.pm = pm
+						input.checkno = check
+						input.what = what
+						input.amount = amount
+						input.save
+					end
 				else
 					@errors.push("BAD LINE: #{line}")
 				end
 			end
 		end
-		redirect_to new_bulkinput_path(documentname: @documentname)
+		redirect_to new_bulkinput_path(documentname: @documentname, errors: @errors)
 	end
 
 	def new
 		# classification page
 		@title = 'Classify Bulk Input'
+		@errors = params[:errors]
 		@documentname = params[:documentname]
 		if params[:table]
 			# process current categorization
@@ -203,7 +209,6 @@ class BulkinputController < ApplicationController
 			end
 		end
 		# generate next batch from input table
-		@errors = []
 		@exist = 0
 		@table = Hash.new
 		lineno = 0
