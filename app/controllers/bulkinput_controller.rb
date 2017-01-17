@@ -142,6 +142,7 @@ class BulkinputController < ApplicationController
 	def new
 		# classification page
 		@title = 'Classify Bulk Input'
+		@documentname = params[:documentname]
 		if params[:table]
 			# process current categorization
 			params[:table].each do |id, values|
@@ -255,7 +256,7 @@ class BulkinputController < ApplicationController
 			@categorylist.push(["#{category.ctype}/#{category.category}/#{category.subcategory}/#{category.tax}", category.id])
 		end
 		if @table.count == 0
-			redirect_to edit_bulkinput_path(id: 0), notice: "File #{params[:documentname]} is complete"
+			redirect_to edit_bulkinput_path(id: 0), notice: "File #{@documentname} is complete"
 		end
 	end
 
