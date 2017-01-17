@@ -18,6 +18,7 @@ class BulkinputController < ApplicationController
 		Input.delete_all
 		@title = 'Classify Bulk Input'
 		@document = params[:document]
+		@documentname = @document.original_filename
 		File.open(Rails.root.join(@document.original_filename), 'wb') do |file|
 			@input = @document.read
 		end
@@ -135,7 +136,7 @@ class BulkinputController < ApplicationController
 				end
 			end
 		end
-		redirect_to new_bulkinput_path
+		redirect_to new_bulkinput_path(documentname: @documentname)
 	end
 
 	def new
@@ -254,7 +255,7 @@ class BulkinputController < ApplicationController
 			@categorylist.push(["#{category.ctype}/#{category.category}/#{category.subcategory}/#{category.tax}", category.id])
 		end
 		if @table.count == 0
-			redirect_to edit_bulkinput_path(id: 0), notice: "Entry Complete"
+			redirect_to edit_bulkinput_path(id: 0), notice: "File #{params[:documentname]} is complete"
 		end
 	end
 
