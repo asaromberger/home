@@ -27,16 +27,9 @@ class BulkinputController < ApplicationController
 		if lines[0].gsub(/:.*/, '') == 'OFXHEADER'
 			# Quicken input
 			accountmap = Hash.new
-			accountmap['0014942631'] = 'savings'
-			accountmap['0014942658'] = 'checking'
-			accountmap['0026599074'] = 'fairview'
-			accountmap['0050148729'] = 'business'
-			accountmap['5420396180931795'] = 'mastercard'
-			accountmap['5420396180938550'] = 'mastercard'
-			accountmap['5420396180941950'] = 'mastercard'
-			accountmap['5420396180939475'] = 'mastercard'
-			accountmap['5420396180942115'] = 'mastercard'
-			accountmap['4046440000274510'] = 'mastercard'
+			Accountmap.all.each do |map|
+				accountmap[map.account] = map.ctype
+			end
 			# remerge lines
 			tmp = ''
 			lines.each do |line|

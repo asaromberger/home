@@ -17,6 +17,8 @@ Rails.application.routes.draw do
 
 	resources :whats
 
+	resources :accountmaps
+
 	resources :items
 
 	resources :bulkinput

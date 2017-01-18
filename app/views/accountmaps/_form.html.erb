@@ -1,0 +1,15 @@
+<%= form_for(@accountmap) do |form| %>
+
+	<%= form.label :account, class: 'col-md-2' %>
+	<%= form.text_field :account, class: 'col-md-10' %>
+
+	<div class='clearfix'></div>
+
+	<%= form.label :ctype, class: 'col-md-2' %>
+	<%= form.text_field :ctype, class: 'col-md-10' %>
+
+	<div class='clearfix'></div>
+
+	<%= form.submit 'Update Account Map', class: 'btn btn-primary col-md-3' %>
+<% end %>
+
