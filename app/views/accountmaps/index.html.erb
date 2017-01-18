@@ -1,0 +1,29 @@
+<h1><%= @title %></h1>
+
+<%= link_to 'New Map', new_accountmap_path %>
+
+<div class='clearfix'><p>&nbsp;</p></div>
+
+<table table-bordered>
+
+<thead>
+<tr>
+<th>Account Number</th>
+<th>Category Type</th>
+<th>Edit</th>
+<th>Delete</th>
+</tr>
+</thead>
+
+<tbody>
+<% @accountmaps.each do |accountmap| %>
+	<tr>
+	<td><%= accountmap.account %></td>
+	<td><%= accountmap.ctype %></td>
+	<td><%= link_to 'Edit', edit_accountmap_path(accountmap.id) %></td>
+	<td><%= link_to 'Delete', accountmap_path(accountmap.id), method: :delete, data: {confirm: "Delete #{accountmap.account}?"} %></td>
+	</tr>
+<% end %>
+</tbody>
+
+</table>
