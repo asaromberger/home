@@ -147,7 +147,11 @@ class BulkinputController < ApplicationController
 	def new
 		# classification page
 		@title = 'Classify Bulk Input'
-		@errors = params[:errors]
+		if params[:errors]
+			@errors = params[:errors]
+		else
+			@errors = []
+		end
 		@documentname = params[:documentname]
 		if params[:table]
 			# process current categorization
