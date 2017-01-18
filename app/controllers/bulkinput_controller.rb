@@ -137,7 +137,9 @@ class BulkinputController < ApplicationController
 						input.save
 					end
 				else
-					@errors.push("BAD LINE: #{line}")
+					if line != '_'
+						@errors.push("BAD LINE: #{line}")
+					end
 				end
 			end
 		end
