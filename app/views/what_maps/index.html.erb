@@ -1,0 +1,29 @@
+<h1><%= @title %></h1>
+
+<%= link_to 'New Map', new_what_map_path %>
+
+<div class='clearfix'><p>&nbsp;</p></div>
+
+<table table-bordered>
+
+<thead>
+<tr>
+<th>What</th>
+<th>Map</th>
+<th>Edit</th>
+<th>Delete</th>
+</tr>
+</thead>
+
+<tbody>
+<% @whatmaps.each do |whatmap| %>
+	<tr>
+	<td><%= whatmap.whatmap %></td>
+	<td><%= whatmap.what.what %></td>
+	<td><%= link_to 'Edit', edit_what_map_path(whatmap.id) %></td>
+	<td><%= link_to 'Delete', what_map_path(whatmap.id), method: :delete, data: {confirm: "Delete #{whatmap.whatmap}?"} %></td>
+	</tr>
+<% end %>
+</tbody>
+
+</table>
