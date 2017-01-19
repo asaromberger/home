@@ -17,6 +17,8 @@ Rails.application.routes.draw do
 
 	resources :whats
 
+	resources :what_maps
+
 	resources :accountmaps
 
 	resources :items

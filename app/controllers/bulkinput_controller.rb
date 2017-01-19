@@ -3,11 +3,6 @@ class BulkinputController < ApplicationController
 	before_action :require_signed_in
 	before_action :require_expenses
 
-	def index
-		@title = 'WhatMap'
-		@whatmaps = WhatMap.all.order('whatmap')
-	end
-
 	def edit
 		@title = 'Bulk Input'
 	end
