@@ -15,7 +15,7 @@
 
 <div class='clearfix'><p>&nbsp;</p></div>
 
-<table class='table-bordered'>
+<table class='table-bordered table-striped'>
 
 <thead>
 <tr>
@@ -45,8 +45,8 @@
 	<td><%= item.what.category.category %></td>
 	<td><%= item.what.category.subcategory %></td>
 	<td><%= item.what.category.tax %></td>
-	<td><%= link_to 'Edit', edit_item_path(item.id) %></td>
-	<td><%= link_to 'Delete', item_path(item.id), method: :delete, data: {confirm: "Delete #{item.date}, #{item.what.what}, #{item.amount}?"} %></td>
+	<td><%= link_to 'Edit', edit_item_path(id: item.id, year: @year) %></td>
+	<td><%= link_to 'Delete', item_path(id: item.id, year: @year), method: :delete, data: {confirm: "Delete #{item.date}, #{item.what.what}, #{item.amount}?"} %></td>
 	</tr>
 <% end %>
 </tbody>
