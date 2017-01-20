@@ -3,6 +3,8 @@
 	<%= form.label :date, class: 'col-md-2' %>
 	<%= form.date_select :date, {start_year: 1988, value: @item.date}, {class: 'date-select col-md-1'} %>
 
+	<%= hidden_field_tag :year, @year %>
+
 	<div class='clearfix'></div>
 
 	<%= form.label '+/i', class: 'col-md-2' %>
