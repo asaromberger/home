@@ -2,3 +2,27 @@
 th, td {
 	padding: 0px 5px 0px 5px;
 }
+
+/* classes for the budget tables */
+.subtotal {
+	background-color: #DDDDDD !important;
+	font-weight: bold;
+	text-align: right;
+}
+
+.totaltitle {
+	background-color: #BBBBBB !important;
+	font-weight: bold;
+	text-align: center;
+}
+
+.total {
+	background-color: #BBBBBB !important;
+	font-weight: bold;
+	text-align: right;
+}
+
+.number {
+	text-align: right;
+}
+

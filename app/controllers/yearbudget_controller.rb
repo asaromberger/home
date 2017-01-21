@@ -14,7 +14,7 @@ class YearbudgetController < ApplicationController
 		Item.all.pluck("DISTINCT EXTRACT(year FROM date)").each do |year|
 			@years.push(year.to_i)
 		end
-		@years = @years.sort
+		@years = @years.sort.reverse
 		# @data[ctype][category][subcategory][month]
 		@data = Hash.new
 		@ctotals = Hash.new
