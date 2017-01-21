@@ -5,7 +5,15 @@ class WhatsController < ApplicationController
 
 	def index
 		@title = 'What To Category Map'
-		@whats = What.joins(:category).all.order('ctype, category, subcategory')
+		@whats = What.joins(:category).all.order('ctype, category, subcategory, what')
+		@categorymap = Hash.new
+		Category.all.each do |category|
+			@categorymap[category.id] = Hash.new
+			@categorymap[category.id]['ctype'] = category.ctype
+			@categorymap[category.id]['category'] = category.category
+			@categorymap[category.id]['subcategory'] = category.subcategory
+			@categorymap[category.id]['tax'] = category.tax
+		end
 	end
 
 	def new
@@ -35,6 +43,30 @@ class WhatsController < ApplicationController
 			redirect_to whats_path, notice: 'What map Updated'
 		else
 			redirect_to whats_path, alert: 'Failed to create What map'
+		end
+	end
+
+	def remap
+		@title = 'Remap specified What to another what'
+		@what = What.find(params[:id])
+		@whats = [['', 0]]
+		What.all.order('what').each do |what|
+			@whats.push([what.what, what.id])
+		end
+	end
+
+	def remapupdate
+		@id = params[:id]
+		@what = What.find(@id)
+		@newid = params[:newid]
+		if WhatMap.where("what_id = ?", @id).count > 0
+			redirect_to whats_path, alert: "Aborted: #{@what.what} exists in WhatMap"
+		else
+			@newwhat = What.find(@id)
+			count = Item.where("what_id = ?", @id).count
+			Item.where("what_id = ?", @id).update_all(what_id: @newid)
+			What.find(@id).delete
+			redirect_to whats_path, notice: "#{count} '#{@what.what}' remapped to '#{@newwhat.what}'"
 		end
 	end
 

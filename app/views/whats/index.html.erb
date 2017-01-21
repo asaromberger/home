@@ -4,7 +4,7 @@
 
 <div class='clearfix'><p>&nbsp;</p></div>
 
-<table table-bordered>
+<table class='table-striped'>
 
 <thead>
 <tr>
@@ -15,6 +15,7 @@
 <th>Tax</th>
 <th>Edit</th>
 <th>Delete</th>
+<th>Remap</th>
 </tr>
 </thead>
 
@@ -22,12 +23,13 @@
 <% @whats.each do |what| %>
 	<tr>
 	<td><%= what.what %></td>
-	<td><%= what.category.ctype %></td>
-	<td><%= what.category.category %></td>
-	<td><%= what.category.subcategory %></td>
-	<td><%= what.category.tax %></td>
+	<td><%= @categorymap[what.category_id]['ctype'] %></td>
+	<td><%= @categorymap[what.category_id]['category'] %></td>
+	<td><%= @categorymap[what.category_id]['subcategory'] %></td>
+	<td><%= @categorymap[what.category_id]['tax'] %></td>
 	<td><%= link_to 'Edit', edit_what_path(what.id) %></td>
 	<td><%= link_to 'Delete', what_path(what.id), method: :delete, data: {confirm: "Delete #{what.what}?"} %></td>
+	<td><%= link_to 'Remap', whats_remap_path(id: what.id) %></td>
 	</tr>
 <% end %>
 </tbody>

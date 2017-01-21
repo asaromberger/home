@@ -1,0 +1,12 @@
+<h1><% @title %></h1>
+
+<%= form_tag whats_remapupdate_path(id: @what.id), :method => :put do %>
+
+	<%= label_tag @what.what %>
+	<%= select_tag :newid, options_for_select(@whats) %>
+
+	<div class='clearfix'><p>&nbsp;</p></div>
+
+	<%= submit_tag 'Remap', class: 'btn btn-primary col-md-1' %>
+
+<% end %>
