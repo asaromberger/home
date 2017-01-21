@@ -1,14 +1,3 @@
-<style>
-.boldright {
-	font-weight: bold;
-	text-align: right;
-}
-.boldcenter {
-	font-weight: bold;
-	text-align: center;
-}
-</style>
-
 <h1><%= @title %></h1>
 
 <div class='dropdown'>
@@ -57,27 +46,27 @@
 			<% tcat = '' %>
 			<% if subcat == '~' %>
 				<% tsubcat = 'Total' %>
-				<% tclass = "class='boldright'".html_safe %>
+				<% tclass = 'subtotal' %>
 			<% else %>
 				<% tsubcat = subcat %>
 				<% tclass = "" %>
 			<% end %>
-			<td <%= tclass %> ><%= tsubcat %></td>
+			<td class='<%= tclass %>'><%= tsubcat %></td>
 			<% @years.each do |year| %>
-				<td align='right' <%= tclass %> ><%= number_with_precision(subcatdata[year], precision: 2) %></td>
+				<td class='<%= tclass %> number' <%= tclass %> ><%= number_with_precision(subcatdata[year], precision: 2) %></td>
 			<% end %>
-			<td align='right' <%= tclass %> ><%= number_with_precision(subcatdata['total'], precision: 2) %></td>
-			<td align='right' <%= tclass %> ><%= number_with_precision(subcatdata['average'], precision: 2) %></td>
+			<td class='<%= tclass %> number' <%= tclass %> ><%= number_with_precision(subcatdata['total'], precision: 2) %></td>
+			<td class='<%= tclass %> number' <%= tclass %> ><%= number_with_precision(subcatdata['average'], precision: 2) %></td>
 			</tr>
 		<% end %>
 	<% end %>
 	<tr>
-	<td colspan=2 class='boldcenter'>TOTAL</th>
+	<td colspan=2 class='totaltitle'>TOTAL</th>
 	<% @years.each do |year| %>
-		<td class='boldright'><%= number_with_precision(@ctotals[ctype][year], precision: 2) %></td>
+		<td class='total'><%= number_with_precision(@ctotals[ctype][year], precision: 2) %></td>
 	<% end %>
-	<td class='boldright'><%= number_with_precision(@ctotals[ctype]['total'], precision: 2) %></td>
-	<td class='boldright'><%= number_with_precision(@ctotals[ctype]['average'], precision: 2) %></td>
+	<td class='total'><%= number_with_precision(@ctotals[ctype]['total'], precision: 2) %></td>
+	<td class='total'><%= number_with_precision(@ctotals[ctype]['average'], precision: 2) %></td>
 	</tr>
 	</tbody>
 
