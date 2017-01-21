@@ -16,6 +16,8 @@ Rails.application.routes.draw do
 	match '/categoriesbulkinputupdate', to: 'categories#bulkinputupdate', via: :get
 
 	resources :whats
+	match '/whats_remap', to: 'whats#remap', via: :get
+	match '/whats_remapupdate', to: 'whats#remapupdate', via: :put
 
 	resources :what_maps
 
