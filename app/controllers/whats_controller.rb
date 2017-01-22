@@ -50,7 +50,7 @@ class WhatsController < ApplicationController
 		@title = 'Remap specified What to another what'
 		@what = What.find(params[:id])
 		@whats = [['', 0]]
-		What.all.order('what').each do |what|
+		What.where("id != ?", @what.id).order('what').each do |what|
 			@whats.push([what.what, what.id])
 		end
 	end
