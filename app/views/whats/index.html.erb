@@ -22,7 +22,7 @@
 <tbody>
 <% @whats.each do |what| %>
 	<tr>
-	<td><%= what.what %></td>
+	<td><%= link_to what.what, what_path(id: what.id), method: :get %></td>
 	<td><%= @categorymap[what.category_id]['ctype'] %></td>
 	<td><%= @categorymap[what.category_id]['category'] %></td>
 	<td><%= @categorymap[what.category_id]['subcategory'] %></td>

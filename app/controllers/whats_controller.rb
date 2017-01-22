@@ -46,6 +46,12 @@ class WhatsController < ApplicationController
 		end
 	end
 
+	def show
+		@what = What.find(params[:id])
+		@title = "Where is '#{@what.what}'"
+		@items = Item.where("what_id = ?", @what.id).order('date')
+	end
+
 	def remap
 		@title = 'Remap specified What to another what'
 		@what = What.find(params[:id])
