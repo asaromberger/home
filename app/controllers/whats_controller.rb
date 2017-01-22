@@ -68,7 +68,7 @@ class WhatsController < ApplicationController
 		if WhatMap.where("what_id = ?", @id).count > 0
 			redirect_to whats_path, alert: "Aborted: #{@what.what} exists in WhatMap"
 		else
-			@newwhat = What.find(@id)
+			@newwhat = What.find(@newid)
 			count = Item.where("what_id = ?", @id).count
 			Item.where("what_id = ?", @id).update_all(what_id: @newid)
 			What.find(@id).delete
