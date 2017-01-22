@@ -65,15 +65,14 @@ class WhatsController < ApplicationController
 		@id = params[:id]
 		@what = What.find(@id)
 		@newid = params[:newid]
-		if WhatMap.where("what_id = ?", @id).count > 0
-			redirect_to whats_path, alert: "Aborted: #{@what.what} exists in WhatMap"
-		else
-			@newwhat = What.find(@newid)
-			count = Item.where("what_id = ?", @id).count
-			Item.where("what_id = ?", @id).update_all(what_id: @newid)
-			What.find(@id).delete
-			redirect_to whats_path, notice: "#{count} '#{@what.what}' remapped to '#{@newwhat.what}'"
-		end
+		@newwhat = What.find(@newid)
+		# update WhatMaps
+		WhatMap.where("what_id = ?", @id).update_all(what_id: @newid)
+		count = Item.where("what_id = ?", @id).count
+		# update Items
+		Item.where("what_id = ?", @id).update_all(what_id: @newid)
+		What.find(@id).delete
+		redirect_to whats_path, notice: "#{count} '#{@what.what}' remapped to '#{@newwhat.what}'"
 	end
 
 	def destroy
