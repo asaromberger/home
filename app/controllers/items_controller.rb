@@ -15,12 +15,14 @@ class ItemsController < ApplicationController
 			@years.push(year.to_i)
 		end
 		@years = @years.sort.reverse
+		# build what_id to what and cat_id tables
 		whats = Hash.new
 		whatcatids = Hash.new
 		What.all.each do |what|
 			whats[what.id] = what.what
 			whatcatids[what.id] = what.category_id
 		end
+		# build cat_id to ctype, category, subcategory, tax tables
 		ctypes = Hash.new
 		categories = Hash.new
 		subcategories = Hash.new
