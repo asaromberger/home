@@ -10,12 +10,40 @@ class ItemsController < ApplicationController
 			@year = params[:year]
 		end
 		@title = "#{@year} Expenses"
-		@items = Item.where("EXTRACT(year FROM date) = ?", @year).order('date')
 		@years = []
 		Item.all.pluck("DISTINCT EXTRACT(year FROM date)").each do |year|
 			@years.push(year.to_i)
 		end
 		@years = @years.sort.reverse
+		whats = Hash.new
+		whatcatids = Hash.new
+		What.all.each do |what|
+			whats[what.id] = what.what
+			whatcatids[what.id] = what.category_id
+		end
+		ctypes = Hash.new
+		categories = Hash.new
+		subcategories = Hash.new
+		taxes = Hash.new
+		Category.all.each do |category|
+			ctypes[category.id] = category.ctype
+			categories[category.id] = category.category
+			subcategories[category.id] = category.subcategory
+			taxes[category.id] = category.tax
+		end
+		@items = Hash.new
+		Item.where("EXTRACT(year FROM date) = ?", @year).order('date').each do |item|
+			@items[item.id] = Hash.new
+			@items[item.id]['date'] = item.date
+			@items[item.id]['pm'] = item.pm
+			@items[item.id]['checkno'] = item.checkno
+			@items[item.id]['what'] = whats[item.what_id]
+			@items[item.id]['amount'] = item.amount
+			@items[item.id]['ctype'] = ctypes[whatcatids[item.what_id]]
+			@items[item.id]['category'] = categories[whatcatids[item.what_id]]
+			@items[item.id]['subcategory'] = subcategories[whatcatids[item.what_id]]
+			@items[item.id]['tax'] = taxes[whatcatids[item.what_id]]
+		end
 	end
 
 	def new
