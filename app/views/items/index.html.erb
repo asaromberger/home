@@ -34,19 +34,19 @@
 </thead>
 
 <tbody>
-<% @items.each do |item| %>
+<% @items.each do |id, item| %>
 	<tr>
-	<td><%= item.date %></td>
-	<td><%= item.pm %></td>
-	<td><%= item.checkno %></td>
-	<td><%= item.what.what %></td>
-	<td align='right'><%= number_with_precision(item.amount, precision: 2) %></td>
-	<td><%= item.what.category.ctype %></td>
-	<td><%= item.what.category.category %></td>
-	<td><%= item.what.category.subcategory %></td>
-	<td><%= item.what.category.tax %></td>
-	<td><%= link_to 'Edit', edit_item_path(id: item.id, year: @year) %></td>
-	<td><%= link_to 'Delete', item_path(id: item.id, year: @year), method: :delete, data: {confirm: "Delete #{item.date}, #{item.what.what}, #{item.amount}?"} %></td>
+	<td><%= item['date'] %></td>
+	<td><%= item['pm'] %></td>
+	<td><%= item['checkno'] %></td>
+	<td><%= item['what'] %></td>
+	<td align='right'><%= number_with_precision(item['amount'], precision: 2) %></td>
+	<td><%= item['ctype'] %></td>
+	<td><%= item['category'] %></td>
+	<td><%= item['subcategory'] %></td>
+	<td><%= item['tax'] %></td>
+	<td><%= link_to 'Edit', edit_item_path(id: id, year: @year) %></td>
+	<td><%= link_to 'Delete', item_path(id: id, year: @year), method: :delete, data: {confirm: "Delete #{item['date']}, #{item['what']}, #{item['amount']}?"} %></td>
 	</tr>
 <% end %>
 </tbody>
