@@ -45,7 +45,7 @@ class RunningbudgetController < ApplicationController
 		# @data[ctype][category][subcategory][year]
 		@data = Hash.new
 		@ctotals = Hash.new
-		Item.joins(:what => :category).where("EXTRACT(year FROM date) >= ? AND EXTRACT(year FROM date) <= ?", @fromyear, @toyear).each do |item|
+		Item.where("EXTRACT(year FROM date) >= ? AND EXTRACT(year FROM date) <= ?", @fromyear, @toyear).each do |item|
 			ctype = ctypes[whatcatids[item.what_id]]
 			category = categories[whatcatids[item.what_id]]
 			subcategory = subcategories[whatcatids[item.what_id]]
