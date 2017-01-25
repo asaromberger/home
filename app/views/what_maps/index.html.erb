@@ -4,14 +4,22 @@
 
 <div class='clearfix'><p>&nbsp;</p></div>
 
-<table table-bordered>
+<div>
+Click on a column header to sort by that column<br/>
+<input type="button" value="Show all columns" onclick="javascript:showAllColumns('table_report')"></input>
+<span>(Control-click on header to hide a field)</span>
+<input type="button" value="Create custom report!" onclick="javascript:createURL('table_report', 'table_urlBox')"></input>
+<span id="table_urlBox"></span>
+</div>
+
+<table class='table table-bordered table-striped' id='table_report'>
 
 <thead>
 <tr>
-<th>What</th>
-<th>Map</th>
-<th>Edit</th>
-<th>Delete</th>
+<th class='table sorttable_alpha' id='WHAT'>What</th>
+<th class='table sorttable_alpha' id='MAP'>Map</th>
+<th class='table sorttable_alpha' id='EDIT'>Edit</th>
+<th class='table sorttable_alpha' id='DELETE'>Delete</th>
 </tr>
 </thead>
 
@@ -27,3 +35,23 @@
 </tbody>
 
 </table>
+
+<script type="text/javascript">
+  var tableFilters = {
+    sort_select: true,
+    btn_reset: true,
+    btn_reset_text: "Clear Filters",
+    btn_text: " > ",
+    alternate_rows: false,
+    flt_row_class: "tableFlt",
+    col_width_0: "15", //WHAT
+    col_width_1: "15", //MAP
+    col_width_2: "15", //TAX
+    col_width_3: "1", //EDIT
+    col_width_4: "1", //DELETE
+    display_all_text: "<*>",
+  }
+  sorttable.makeSortable(document.getElementById('table_report'), 1);
+  setFilterGrid('table_report', 1, tableFilters);
+  setupSearch('table_report');
+</script>
