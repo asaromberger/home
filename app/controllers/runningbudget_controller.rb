@@ -24,13 +24,31 @@ class RunningbudgetController < ApplicationController
 		(@fromyear..@toyear).each do |year|
 			@years.push(year.to_i)
 		end
+		# build what_id to what and cat_id tables
+		whats = Hash.new
+		whatcatids = Hash.new
+		What.all.each do |what|
+			whats[what.id] = what.what
+			whatcatids[what.id] = what.category_id
+		end
+		# build cat_id to ctype, category, subcategory, tax tables
+		ctypes = Hash.new
+		categories = Hash.new
+		subcategories = Hash.new
+		taxes = Hash.new
+		Category.all.each do |category|
+			ctypes[category.id] = category.ctype
+			categories[category.id] = category.category
+			subcategories[category.id] = category.subcategory
+			taxes[category.id] = category.tax
+		end
 		# @data[ctype][category][subcategory][year]
 		@data = Hash.new
 		@ctotals = Hash.new
-		Item.joins(:what => :category).where("EXTRACT(year FROM date) >= ? AND EXTRACT(year FROM date) <= ?", @fromyear, @toyear).each do |item|
-			ctype = item.what.category.ctype
-			category = item.what.category.category
-			subcategory = item.what.category.subcategory
+		Item.where("EXTRACT(year FROM date) >= ? AND EXTRACT(year FROM date) <= ?", @fromyear, @toyear).each do |item|
+			ctype = ctypes[whatcatids[item.what_id]]
+			category = categories[whatcatids[item.what_id]]
+			subcategory = subcategories[whatcatids[item.what_id]]
 			amount = item.amount
 			year = item.date.year
 			if item.pm == '-'
