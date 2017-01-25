@@ -24,14 +24,30 @@ class RentalcostsController < ApplicationController
 		(@fromyear..@toyear).each do |year|
 			@years.push(year.to_i)
 		end
+		# build what_id to what and cat_id tables
+		whats = Hash.new
+		whatcatids = Hash.new
+		What.all.each do |what|
+			whats[what.id] = what.what
+			whatcatids[what.id] = what.category_id
+		end
+		# build cat_id to category, subcategory, tax tables
+		categories = Hash.new
+		subcategories = Hash.new
+		taxes = Hash.new
+		Category.all.each do |category|
+			categories[category.id] = category.category
+			subcategories[category.id] = category.subcategory
+			taxes[category.id] = category.tax
+		end
 		# @data[category][subcategory][year]
 		@data = Hash.new
 		Item.joins(:what => :category).where("ctype = 'business' AND EXTRACT(year FROM date) >= ? AND EXTRACT(year FROM date) <= ?", @fromyear, @toyear).each do |item|
-			category = item.what.category.category
+			category = categories[whatcatids[item.what_id]]
 			if category != '33rd' && category != 'Fairview'
 				next
 			end
-			subcategory = item.what.category.subcategory
+			subcategory = subcategories[whatcatids[item.what_id]]
 			if subcategory == 'Rent' || subcategory == 'Security Deposit'
 				next
 			end
