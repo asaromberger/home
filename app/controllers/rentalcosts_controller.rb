@@ -42,11 +42,8 @@ class RentalcostsController < ApplicationController
 		end
 		# @data[category][subcategory][year]
 		@data = Hash.new
-		Item.joins(:what => :category).where("ctype = 'business' AND EXTRACT(year FROM date) >= ? AND EXTRACT(year FROM date) <= ?", @fromyear, @toyear).each do |item|
+		Item.joins(:what => :category).where("ctype = 'rental' AND EXTRACT(year FROM date) >= ? AND EXTRACT(year FROM date) <= ?", @fromyear, @toyear).each do |item|
 			category = categories[whatcatids[item.what_id]]
-			if category != '33rd' && category != 'Fairview'
-				next
-			end
 			subcategory = subcategories[whatcatids[item.what_id]]
 			if subcategory == 'Rent' || subcategory == 'Security Deposit'
 				next

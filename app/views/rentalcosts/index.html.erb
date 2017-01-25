@@ -45,20 +45,20 @@
 				<% tsubcat = 'Total' %>
 				<td class='subtotal'>Total</td>
 				<% @years.each do |year| %>
-					<% if catdata['Upkeep'][year] %>
+					<% if catdata['Upkeep'] && catdata['Upkeep'][year] %>
 						<% t = subcatdata[year] - catdata['Upkeep'][year] %>
 					<% else %>
 						<% t = 0 %>
 					<% end %>
 					<td class='subtotal'><%= number_with_precision(t, precision: 2) %></td>
 				<% end %>
-				<% if catdata['Upkeep']['total'] %>
+				<% if catdata['Upkeep'] && catdata['Upkeep']['total'] %>
 					<% t = subcatdata['total'] - catdata['Upkeep']['total'] %>
 				<% else %>
 					<% t = 0 %>
 				<% end %>
 				<td class='subtotal'><%= number_with_precision(t, precision: 2) %></td>
-				<% if catdata['Upkeep']['average'] %>
+				<% if catdata['Upkeep'] && catdata['Upkeep']['average'] %>
 					<% t = subcatdata['average'] - catdata['Upkeep']['average'] %>
 				<% else %>
 					<% t = 0 %>
@@ -75,15 +75,21 @@
 			</tr>
 		<% end %>
 	<% end %>
-	<tr>
-	<% subcatdata = catdata['Upkeep'] %>
-	<td>Upkeep</td>
-	<% @years.each do |year| %>
-		<td class='number'><%= number_with_precision(subcatdata[year], precision: 2) %></td>
+	<% if catdata['Upkeep'] %>
+		<tr>
+		<% subcatdata = catdata['Upkeep'] %>
+		<td>Upkeep</td>
+		<% @years.each do |year| %>
+			<% if subcatdata[year] %>
+				<td class='number'><%= number_with_precision(subcatdata[year], precision: 2) %></td>
+			<% else %>
+				<td class='number'>0.00</td>
+			<% end %>
+		<% end %>
+		<td class='number'><%= number_with_precision(subcatdata['total'], precision: 2) %></td>
+		<td class='number'><%= number_with_precision(subcatdata['average'], precision: 2) %></td>
+		</tr>
 	<% end %>
-	<td class='number'><%= number_with_precision(subcatdata['total'], precision: 2) %></td>
-	<td class='number'><%= number_with_precision(subcatdata['average'], precision: 2) %></td>
-	</tr>
 	</tbody>
 
 	</table>
