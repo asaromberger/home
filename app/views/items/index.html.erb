@@ -15,21 +15,29 @@
 
 <div class='clearfix'><p>&nbsp;</p></div>
 
-<table class='table-bordered table-striped'>
+<div>
+Click on a column header to sort by that column<br/>
+<input type="button" value="Show all columns" onclick="javascript:showAllColumns('table_report')"></input>
+<span>(Control-click on header to hide a field)</span>
+<input type="button" value="Create custom report!" onclick="javascript:createURL('table_report', 'table_urlBox')"></input>
+<span id="table_urlBox"></span>
+</div>
+
+<table class='table table-bordered table-striped' id='table_report'>
 
 <thead>
 <tr>
-<th>Date</th>
-<th>+/-</th>
-<th>Check</th>
-<th>What</th>
-<th>Amount</th>
-<th>Type</th>
-<th>Category</th>
-<th>Subcat</th>
-<th>Tax</th>
-<th>Edit</th>
-<th>Delete</th>
+<th class='table sorttable_alpha' id='DATE'>Date</th>
+<th class='table sorttable_alpha' id='PM'>+/-</th>
+<th class='table sorttable_alpha' id='CHECK'>Check</th>
+<th class='table sorttable_alpha' id='WHAT'>What</th>
+<th class='table sorttable_numeric' id='AMOUNT'>Amount</th>
+<th class='table sorttable_alpha' id='TYPE'>Type</th>
+<th class='table sorttable_alpha' id='CAT'>Category</th>
+<th class='table sorttable_alpha' id='SUBCAT'>Subcat</th>
+<th class='table sorttable_alpha' id='TAX'>Tax</th>
+<th class='table sorttable_alpha' id='EDIT'>Edit</th>
+<th class='table sorttable_alpha' id='DELETE'>Delete</th>
 </tr>
 </thead>
 
@@ -52,3 +60,29 @@
 </tbody>
 
 </table>
+
+<script type="text/javascript">
+  var tableFilters = {
+    sort_select: true,
+    btn_reset: true,
+    btn_reset_text: "Clear Filters",
+    btn_text: " > ",
+    alternate_rows: false,
+    flt_row_class: "tableFlt",
+    col_width_0: "5", //DATE
+    col_1: "select", //PM
+    col_width_2: "6", //CHECKNO
+    col_width_3: "20", //WHAT
+    col_width_4: "4", //AMOUNT
+    col_5: "select", //TYPE
+    col_6: "select", //CAT
+    col_width_7: "8", //SUBCAT
+    col_width_8: "8", //TAX
+    col_width_9: "1", //EDIT
+    col_width_10: "1", //DELETE
+    display_all_text: "<*>",
+  }
+  sorttable.makeSortable(document.getElementById('table_report'), 1);
+  setFilterGrid('table_report', 1, tableFilters);
+  setupSearch('table_report');
+</script>
