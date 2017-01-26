@@ -1,3 +1,9 @@
+/* Enhance the shading on striped tables */
+.table-striped tbody > tr:nth-child(odd) > td,
+.table-striped tbody > tr:nth-child(odd) > th {
+	background-color: #e0e0e0;
+}
+
 /* horizontal padding on table cells to separate them */
 th, td {
 	padding: 0px 5px 0px 5px;
