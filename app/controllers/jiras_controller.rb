@@ -39,6 +39,12 @@ class JirasController < ApplicationController
 		end
 	end
 
+	def destroy
+		@jira = Jira.find(params[:id])
+		@jira.delete
+		redirect_to jiras_path, notice: "Deleted Jira-#{@jira.id}: #{@jira.summary}"
+	end
+
 private
 
 	def require_jira

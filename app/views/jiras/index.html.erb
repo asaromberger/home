@@ -4,7 +4,7 @@
 
 <h2>Active</h2>
 
-<table>
+<table class='table-bordered table-striped'>
 
 <thead>
 <tr>
@@ -34,13 +34,14 @@
 
 <h2>Complete</h2>
 
-<table>
+<table class='table-bordered table-striped'>
 
 <thead>
 <tr>
 <th>ID</th>
 <th>Summary</th>
 <th>Description</th>
+<th>Delete</th>
 </tr>
 </thead>
 
@@ -50,6 +51,7 @@
 	<td><%= jira.id %></td>
 	<td><%= jira.summary %></td>
 	<td><%= jira.description %></td>
+	<td><%= link_to 'Delete', jira_path(id: jira.id), method: :delete, data: {confirm: "Delete Jira-#{jira.id}: #{jira.summary}"} %></td>
 	</tr>
 <% end %>
 </tbody>
