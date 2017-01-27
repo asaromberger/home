@@ -1,0 +1,51 @@
+<h1><%= @title %></h1>
+
+<h2>Categories</h1>
+
+<table>
+
+<thead>
+<tr>
+<th>Type</th>
+<th>Category</th>
+<th>Subcat</th>
+<th>Tax</th>
+<th>Delete</th>
+</tr>
+</thead>
+
+<tbody>
+<% @categories.each do |category| %>
+	<tr>
+	<td><%= category.ctype %></td>
+	<td><%= category.category %></td>
+	<td><%= category.subcategory %></td>
+	<td><%= category.tax %></td>
+	<td><%= link_to 'Delete', unused_path(id: category.id, table: 'category'), method: :delete, data: {confirm: "Delete #{category.ctype}/#{category.category}/#{category.subcategory}/#{category.tax}"} %></td>
+	</tr>
+<% end %>
+</tbody>
+
+</table>
+
+<h2>Whats</h1>
+
+<table>
+
+<thead>
+<tr>
+<th>What</th>
+<th>Delete</th>
+</tr>
+</thead>
+
+<tbody>
+<% @whats.each do |what| %>
+	<tr>
+	<td><%= what.what %></td>
+	<td><%= link_to 'Delete', unused_path(id: what.id, table: 'what'), method: :delete, data: {confirm: "Delete #{what.what}"} %></td>
+	</tr>
+<% end %>
+</tbody>
+
+</table>
