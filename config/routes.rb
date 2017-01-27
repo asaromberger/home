@@ -26,14 +26,14 @@ Rails.application.routes.draw do
 	resources :items
 
 	resources :bulkinput
-	match '/inputfromtracking', to: 'bulkinput#inputfromtracking', via: :get
-	match '/inputfromquicken', to: 'bulkinput#inputfromquicken', via: :get
 
 	resources :yearbudget
 
 	resources :runningbudget
 
 	resources :rentalcosts
+
+	resources :transfers
 
 	match '/admin_roles', to: 'admin#roles', via: :get
 	match '/admin_roles_edit', to: 'admin#roles_edit', via: :get
