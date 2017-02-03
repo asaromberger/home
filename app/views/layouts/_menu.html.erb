@@ -16,6 +16,10 @@
 					<%= render 'layouts/menu_jira' %>
 				<% end %>
 
+				<% if has_role(current_user.id, 'conversations') %>
+					<li><%= link_to 'Conversations', people_path %></li>
+				<% end %>
+
 				<% if has_role(current_user.id, 'expenses') %>
 					<%= render 'layouts/menu_expenses' %>
 				<% end %>

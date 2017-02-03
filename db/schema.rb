@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170118224042) do
+ActiveRecord::Schema.define(version: 20170202223638) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,15 @@ ActiveRecord::Schema.define(version: 20170118224042) do
     t.string   "tax"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+  end
+
+  create_table "conversations", force: :cascade do |t|
+    t.integer  "person_id"
+    t.date     "date"
+    t.text     "note"
+    t.date     "scheduled"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "inputs", force: :cascade do |t|
@@ -59,6 +68,13 @@ ActiveRecord::Schema.define(version: 20170118224042) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.integer  "priority"
+  end
+
+  create_table "people", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "permissions", force: :cascade do |t|
