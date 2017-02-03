@@ -58,6 +58,7 @@ class PeopleController < ApplicationController
 		Conversation.where("person_id = ?", @person.id).delete_all
 		# delete person
 		@person.delete
+		redirect_to people_path, notice: "#{@person.name} Deleted"
 	end
 
 private
