@@ -1,0 +1,24 @@
+<%= form_for(@conversation) do |form| %>
+
+	<%= hidden_field_tag :person, @person.id %>
+
+	<div class='clearfix'><p>&nbsp;</p></div>
+
+	<%= form.label :date, class: 'col-md-1' %>
+	<%= form.date_select :date, {value: @conversation.date}, {class: 'col-md-2'} %>
+
+	<div class='clearfix'><p>&nbsp;</p></div>
+
+	<%= form.label :note, class: 'col-md-1' %>
+	<%= form.text_area :note, class: 'col-md-10' %>
+
+	<div class='clearfix'><p>&nbsp;</p></div>
+
+	<%= form.label :scheduled, class: 'col-md-1' %>
+	<%= form.date_select :scheduled, {value: @conversation.scheduled}, {class: 'col-md-2'} %>
+
+	<div class='clearfix'><p>&nbsp;</p></div>
+
+	<%= form.submit 'Update conversation', class: 'btn btn-primary col-md-3' %>
+
+<% end %>

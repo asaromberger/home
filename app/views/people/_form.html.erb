@@ -1,0 +1,10 @@
+<%= form_for(@person) do |form| %>
+
+	<%= form.label :name, class: 'col-md-2' %>
+	<%= form.text_field :name, class: 'col-md-4' %>
+
+	<div class='clearfix'></div>
+
+	<%= form.submit 'Update person', class: 'btn btn-primary col-md-3' %>
+
+<% end %>
