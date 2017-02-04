@@ -1,0 +1,13 @@
+<li class='dropdown'>
+	<a href='#' class='dropdown-toggle' data-toggle='dropdown'>Investments <b class='caret'></b></a>
+	<ul class='dropdown-menu' role='menu'>
+		<li>Accounts<%#= link_to 'Year Expenses', items_path %></li>
+		<li class='divider'></li>
+		<li>Yearly<%#= link_to 'Year Budget', yearbudget_index_path %></li>
+		<li class='divider'></li>
+		<li>Manage Accounts<%#= link_to 'Manage Categories', categories_path %></li>
+		<li>Manage Categories<%#= link_to 'Manage What', whats_path %></li>
+		<li class='divider'></li>
+		<li>Bulk Input<%#= link_to 'Bulk Input From File', edit_bulkinput_path(id: 0) %></li>
+	</ul>
+</li>
