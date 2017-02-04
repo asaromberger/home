@@ -1,0 +1,15 @@
+<%= form_for(@account) do |form| %>
+
+	<%= form.label :account, class: 'col-md-2' %>
+	<%= form.text_field :account, class: 'col-md-10' %>
+
+	<div class='clearfix'></div>
+
+	<%= form.label 'Type', class: 'col-md-2' %>
+	<%= form.select :atype, @atypes, class: 'col-md-10' %>
+
+	<div class='clearfix'></div>
+
+	<%= form.submit 'Update Account', class: 'btn btn-primary col-md-3' %>
+<% end %>
+
