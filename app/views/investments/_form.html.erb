@@ -1,0 +1,21 @@
+<%= form_for(@investment) do |form| %>
+
+	<%= hidden_field_tag :account, @account.id %>
+
+	<%= form.label :date, class: 'col-md-2' %>
+	<%= form.date_select :date, {value: @investment.date}, class: 'col-md-2' %>
+
+	<div class='clearfix'></div>
+
+	<% @headers.each do |header| %>
+		<%= form.label header.titleize, class: 'col-md-2' %>
+		<%= form.number_field header, class: 'col-md-2', step: :any %>
+
+		<div class='clearfix'></div>
+	<% end %>
+
+	<div class='clearfix'></div>
+
+	<%= form.submit 'Update Item', class: 'btn btn-primary col-md-3' %>
+
+<% end %>

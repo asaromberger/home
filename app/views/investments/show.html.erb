@@ -1,0 +1,36 @@
+<h1><%= @title %></h1>
+
+<%= link_to 'New Entry', new_investment_path(id: @account.id), class: 'btn btn-primary col-md-2' %>
+
+<div class='clearfix'><p>&nbsp;</p></div>
+<div class='clearfix'><p>&nbsp;</p></div>
+
+<table class='table-bordered table-striped'>
+
+<thead>
+<tr>
+<th>Date</th>
+<th>Value</th>
+<% @headers.each do |header| %>
+	<th><%= header %></th>
+<% end %>
+<th>Edit</th>
+<th>Delete</th>
+</tr>
+</thead>
+
+<tbody>
+<% @investments.each do |id, values| %>
+	<tr>
+	<td><%= values['date'] %>
+	<td><%= values['value'] %>
+	<% @headers.each do |header| %>
+		<td><%= values[header] %>
+	<% end %>
+	<td><%= link_to 'Edit', edit_investment_path(id: id, account: @account.id) %>
+	<td><%= link_to 'Delete', investment_path(id: id, account: @account.id), method: :delete, data: {confirm: "Delete entry for #{values['date']}?"} %>
+	</tr>
+<% end %>
+</tbody>
+
+</table>
