@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  account_id: 1
+  date: 2017-02-04
+  value: 9.99
+  shares: 9.99
+  pershare: 9.99
+  guaranteed: 9.99
+
+two:
+  account_id: 1
+  date: 2017-02-04
+  value: 9.99
+  shares: 9.99
+  pershare: 9.99
+  guaranteed: 9.99
