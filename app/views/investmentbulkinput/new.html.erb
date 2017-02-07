@@ -1,0 +1,34 @@
+<h1><%= @title %></h1>
+
+File contains a series of lines with tab separate columns. Format depends on account type:
+<ul>
+<li>cash</li>
+	<ul>
+	<li>Date either as MM/DD/YYYY or YYYY-MM-DD</li>
+	<li>Value</li>
+	</ul>
+<li>brokerage</li>
+	<ul>
+	<li>Date either as MM/DD/YYYY or YYYY-MM-DD</li>
+	<li>Shares</li>
+	<li>Cost per share</li>
+	</ul>
+<li>annuity</li>
+	<ul>
+	<li>Date either as MM/DD/YYYY or YYYY-MM-DD</li>
+	<li>Balance</li>
+	<li>Guaranteed</li>
+	</ul>
+</ul>
+
+<%= form_tag investmentbulkinput_index_path, multipart: true do %>
+
+<%= select_tag :account, options_for_select(@accounts) %>
+
+<%= file_field_tag :document %>
+
+<div class='clearfix'></p>&nbsp;</p></div>
+
+<%= submit_tag 'Submit', class: 'btn btn-primary col_md_1' %>
+
+<% end %>

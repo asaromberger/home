@@ -1,13 +1,20 @@
 <h1><%= @title %></h1>
 
+<%= link_to 'New Account', new_account_path %>
+
+<div class='clearfix'><p>&nbsp;</p></div>
+
 <table class='table-bordered table-striped'>
 
 <thead>
 <tr>
 <th>Account</th>
 <th>Type</th>
+<th>Date</th>
 <th>Value</th>
 <th>Details</th>
+<th>Edit</th>
+<th>Delete</th>
 </tr>
 </thead>
 
@@ -16,8 +23,11 @@
 	<tr>
 	<td><%= values['account'] %>
 	<td><%= values['type'] %>
-	<td><%= values['value'] %>
+	<td><%= values['date'] %>
+	<td align='right'><%= number_with_precision(values['value'], precision: 2) %>
 	<td><%= link_to 'Details', investment_path(id: id) %>
+	<td><%= link_to 'Edit', edit_account_path(id) %></td>
+	<td><%= link_to 'Delete', account_path(id), method: :delete, data: {confirm: "Delete #{values['account']} and all associated records?"} %></td>
 	</tr>
 <% end %>
 </tbody>

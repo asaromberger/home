@@ -3,11 +3,6 @@ class AccountsController < ApplicationController
 	before_action :require_signed_in
 	before_action :require_investments
 
-	def index
-		@title = 'Investment Accounts'
-		@accounts = Account.all.order('account')
-	end
-
 	def new
 		@title = 'New Account'
 		@account = Account.new
@@ -17,9 +12,9 @@ class AccountsController < ApplicationController
 	def create
 		@account = Account.new(account_params)
 		if @account.save
-			redirect_to accounts_path, notice: 'Account Added'
+			redirect_to investments_path, notice: 'Account Added'
 		else
-			redirect_to accounts_path, alert: 'Failed to create Account'
+			redirect_to investments_path, alert: 'Failed to create Account'
 		end
 	end
 
@@ -32,16 +27,17 @@ class AccountsController < ApplicationController
 	def update
 		@account = Account.find(params[:id])
 		if @account.update(account_params)
-			redirect_to accounts_path, notice: 'Account Updated'
+			redirect_to investments_path, notice: 'Account Updated'
 		else
-			redirect_to accounts_path, alert: 'Failed to update Account'
+			redirect_to investments_path, alert: 'Failed to update Account'
 		end
 	end
 
 	def destroy
 		@account = Account.find(params[:id])
+		Investments.where("account_id = ?", @account.id).delete_all
 		@account.delete
-		redirect_to accounts_path, notice: "Account #{@account.account} Deleted"
+		redirect_to investments_path, notice: "Account #{@account.account} Deleted"
 	end
 
 private

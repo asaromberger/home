@@ -4,7 +4,7 @@ class InvestmentsController < ApplicationController
 	before_action :require_investments
 
 	def index
-		@title = 'Investments'
+		@title = 'Accounts'
 		@accounts = Hash.new
 		Account.all.order('account').each do |account|
 			@accounts[account.id] = Hash.new
@@ -12,8 +12,10 @@ class InvestmentsController < ApplicationController
 			@accounts[account.id]['type'] = account.atype
 			investment = Investment.where("account_id = ?", account.id).order('date DESC')
 			if investment.count > 0
+				@accounts[account.id]['date'] = investment.first.date
 				@accounts[account.id]['value'] = investment.first.value
 			else
+				@accounts[account.id]['date'] = ''
 				@accounts[account.id]['value'] = 0
 			end
 		end
