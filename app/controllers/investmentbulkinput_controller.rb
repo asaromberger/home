@@ -20,6 +20,7 @@ class InvestmentbulkinputController < ApplicationController
 			@input = @document.read
 		end
 		@errors = []
+		@exists = 0
 		lines = @input.split("\n")
 		# Flat File Input
 		lines.each do |line|
@@ -45,7 +46,7 @@ class InvestmentbulkinputController < ApplicationController
 				end
 				date = "#{year}-#{month}-#{day}"
 				if Investment.where("account_id = ? AND date = ?", @account.id, date).count > 0
-					@errors.push("ALREADY EXISTS: #{line}")
+					@exists = @exists + 1
 					next
 				end
 			end
@@ -92,7 +93,7 @@ class InvestmentbulkinputController < ApplicationController
 				investment.save
 			end
 		end
-		redirect_to new_investmentbulkinput_path(documentname: @documentname, errors: @errors)
+		redirect_to investment_path(id: @account.id, documentname: @documentname, errors: @errors, exists: @exists)
 	end
 
 private

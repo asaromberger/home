@@ -1,5 +1,17 @@
 <h1><%= @title %></h1>
 
+<% if @exists %>
+	<p><%= @exists %> already existed</p>
+<% end %>
+<% if @errors %>
+	Errors:
+	<ul>
+	<% @errors.each do |error| %>
+		<li><%= error %></li>
+	<% end %>
+	</ul>
+<% end %>
+
 <%= link_to 'New Entry', new_investment_path(id: @account.id), class: 'btn btn-primary col-md-2' %>
 
 <div class='clearfix'><p>&nbsp;</p></div>
