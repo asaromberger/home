@@ -6,6 +6,8 @@ class InvestmentsController < ApplicationController
 	def index
 		@title = 'Accounts'
 		@accounts = Hash.new
+		@errors = params[:errors]
+		@exists = params[:exists]
 		Account.all.order('account').each do |account|
 			@accounts[account.id] = Hash.new
 			@accounts[account.id]['account'] = account.account
@@ -31,6 +33,8 @@ class InvestmentsController < ApplicationController
 		elsif @account.atype == 'annuity'
 			@headers = ['Guaranteed', 'Yearly']
 		end
+		@errors = params[:errors]
+		@exists = params[:exists]
 		@investments = Hash.new
 		Investment.where("account_id = ?", @account.id).order('date DESC').each do |investment|
 			@investments[investment.id] = Hash.new
