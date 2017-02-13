@@ -68,6 +68,14 @@ class TaxesController < ApplicationController
 		@title = "Taxes for #{params[:year]} for #{params[:ctype]}/#{params[:cat]}/#{params[:subcat]}/#{params[:tax]}"
 		categoryids = Category.where("ctype = ? AND category = ? AND subcategory = ? AND tax = ?", params[:ctype], params[:cat], params[:subcat], params[:tax]).pluck('DISTINCT id')
 		@items = Item.joins(:what).where("EXTRACT(year FROM date) = ? AND category_id in (?)", params[:year], categoryids).order('date')
+		@summary = Hash.new
+		@items.each do |item|
+			if @summary[item.what.what]
+				@summary[item.what.what] = @summary[item.what.what] + item.amount
+			else
+				@summary[item.what.what] = item.amount
+			end
+		end
 	end
 
 private

@@ -13,7 +13,7 @@
 				<% end %>
 
 				<% if has_role(current_user.id, 'jira') %>
-					<%= render 'layouts/menu_jira' %>
+					<li><%= link_to 'Jira', jiras_path %></li>
 				<% end %>
 
 				<% if has_role(current_user.id, 'conversations') %>

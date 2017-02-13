@@ -23,3 +23,25 @@
 </tbody>
 
 </table>
+
+<h3>Summary</h3>
+
+<table>
+
+<thead>
+<tr>
+<th>What<th>
+<th>Amount<th>
+</tr>
+</thead>
+
+<tbody>
+<% @summary.each do |what, amount| %>
+	<tr>
+	<td><%= what %></td>
+	<td><%= amount %></td>
+	</tr>
+<% end %>
+</tbody>
+
+</table>
