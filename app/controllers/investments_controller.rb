@@ -55,14 +55,19 @@ class InvestmentsController < ApplicationController
 		@account = Account.find(params[:id])
 		@title = "New Entry for #{@account.account}"
 		@investment = Investment.new
-		now = Time.now
-		@investment.date = Date.new(now.year, now.month, now.day)
+		@investment.date = (Time.now - 1.month).end_of_month.to_date
+		lastinvestment = Investment.where("account_id = ?", @account.id).order('date DESC').first
 		if @account.atype == 'cash'
 			@headers = ['value']
+			@investment.value = lastinvestment.value
 		elsif @account.atype == 'brokerage'
 			@headers = ['shares', 'pershare']
+			@investment.shares = lastinvestment.shares
+			@investment.pershare = lastinvestment.pershare
 		elsif @account.atype == 'annuity'
 			@headers = ['value', 'guaranteed']
+			@investment.value = lastinvestment.value
+			@investment.guaranteed = lastinvestment.guaranteed
 		end
 	end
 
