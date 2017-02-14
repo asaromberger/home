@@ -1,0 +1,2 @@
+class SummaryType < ApplicationRecord
+end

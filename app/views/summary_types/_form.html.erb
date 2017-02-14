@@ -1,0 +1,15 @@
+<%= form_for(@summary_type) do |form| %>
+
+	<%= form.label 'Summary Type', class: 'col-md-2' %>
+	<%= form.text_field :stype, class: 'col-md-10' %>
+
+	<div class='clearfix'></div>
+
+	<%= form.label 'Priority', class: 'col-md-2' %>
+	<%= form.number_field :priority, class: 'col-md-10' %>
+
+	<div class='clearfix'></div>
+
+	<%= form.submit 'Update Summary Type', class: 'btn btn-primary col-md-3' %>
+<% end %>
+
