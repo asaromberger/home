@@ -16,11 +16,15 @@ class InvestmentMapsController < ApplicationController
 	end
 
 	def create
-		@investment_map = InvestmentMap.new(investment_map_params)
-		if @investment_map.save
-			redirect_to investment_maps_path, notice: 'Investment Map Added'
+		if InvestmentMap.where("account_id = ? AND summary_type_id = ?", params[:investment_map][:account_id], params[:investment_map][:summary_type_id]).count > 0
+				redirect_to investment_maps_path, alert: 'Map already exists'
 		else
-			redirect_to investment_maps_path, alert: 'Failed to create Investment Map'
+			@investment_map = InvestmentMap.new(investment_map_params)
+			if @investment_map.save
+				redirect_to investment_maps_path, notice: 'Investment Map Added'
+			else
+				redirect_to investment_maps_path, alert: 'Failed to create Investment Map'
+			end
 		end
 	end
 
@@ -32,11 +36,15 @@ class InvestmentMapsController < ApplicationController
 	end
 
 	def update
-		@investment_map = InvestmentMap.find(params[:id])
-		if @investment_map.update(investment_map_params)
-			redirect_to investment_maps_path, notice: 'Investment Map Updated'
+		if InvestmentMap.where("account_id = ? AND summary_type_id = ?", params[:investment_map][:account_id], params[:investment_map][:summary_type_id]).count > 0
+				redirect_to investment_maps_path, alert: 'Map already exists'
 		else
-			redirect_to investment_maps_path, alert: 'Failed to update Investment Map'
+			@investment_map = InvestmentMap.find(params[:id])
+			if @investment_map.update(investment_map_params)
+				redirect_to investment_maps_path, notice: 'Investment Map Updated'
+			else
+				redirect_to investment_maps_path, alert: 'Failed to update Investment Map'
+			end
 		end
 	end
 
