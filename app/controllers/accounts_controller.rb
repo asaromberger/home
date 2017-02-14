@@ -10,11 +10,15 @@ class AccountsController < ApplicationController
 	end
 
 	def create
-		@account = Account.new(account_params)
-		if @account.save
-			redirect_to investments_path, notice: 'Account Added'
+		if Account.where("account = ?", params[:account][:account]).count > 0
+				redirect_to investments_path, alert: 'Account already exists'
 		else
-			redirect_to investments_path, alert: 'Failed to create Account'
+			@account = Account.new(account_params)
+			if @account.save
+				redirect_to investments_path, notice: 'Account Added'
+			else
+				redirect_to investments_path, alert: 'Failed to create Account'
+			end
 		end
 	end
 
@@ -25,11 +29,15 @@ class AccountsController < ApplicationController
 	end
 
 	def update
-		@account = Account.find(params[:id])
-		if @account.update(account_params)
-			redirect_to investments_path, notice: 'Account Updated'
+		if Account.where("account = ?", params[:account][:account]).count > 0
+				redirect_to investments_path, alert: 'Account already exists'
 		else
-			redirect_to investments_path, alert: 'Failed to update Account'
+			@account = Account.find(params[:id])
+			if @account.update(account_params)
+				redirect_to investments_path, notice: 'Account Updated'
+			else
+				redirect_to investments_path, alert: 'Failed to update Account'
+			end
 		end
 	end
 

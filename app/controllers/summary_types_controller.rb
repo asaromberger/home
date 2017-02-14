@@ -14,11 +14,15 @@ class SummaryTypesController < ApplicationController
 	end
 
 	def create
-		@summary_type = SummaryType.new(summary_type_params)
-		if @summary_type.save
-			redirect_to summary_types_path, notice: 'Summary Type Added'
+		if SummaryType.where("stype = ?", params[:summary_type][:stype]).count > 0
+			redirect_to summary_types_path, alert: 'Summary Type already exists'
 		else
-			redirect_to summary_types_path, alert: 'Failed to create Summary Type'
+			@summary_type = SummaryType.new(summary_type_params)
+			if @summary_type.save
+				redirect_to summary_types_path, notice: 'Summary Type Added'
+			else
+				redirect_to summary_types_path, alert: 'Failed to create Summary Type'
+			end
 		end
 	end
 
@@ -28,11 +32,15 @@ class SummaryTypesController < ApplicationController
 	end
 
 	def update
-		@summary_type = SummaryType.find(params[:id])
-		if @summary_type.update(summary_type_params)
-			redirect_to summary_types_path, notice: 'Summary Type Updated'
+		if SummaryType.where("stype = ?", params[:summary_type][:stype]).count > 0
+			redirect_to summary_types_path, alert: 'Summary Type already exists'
 		else
-			redirect_to summary_types_path, alert: 'Failed to update Summary Type'
+			@summary_type = SummaryType.find(params[:id])
+			if @summary_type.update(summary_type_params)
+				redirect_to summary_types_path, notice: 'Summary Type Updated'
+			else
+				redirect_to summary_types_path, alert: 'Failed to update Summary Type'
+			end
 		end
 	end
 
