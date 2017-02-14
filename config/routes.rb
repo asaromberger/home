@@ -51,6 +51,8 @@ Rails.application.routes.draw do
 
 	resources :summary_types
 
+	resources :investment_maps
+
 	resources :investmentbulkinput
 	match '/admin_roles', to: 'admin#roles', via: :get
 	match '/admin_roles_edit', to: 'admin#roles_edit', via: :get
