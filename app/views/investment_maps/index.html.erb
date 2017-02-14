@@ -1,0 +1,29 @@
+<h1><%= @title %></h1>
+
+<%= link_to 'New Investment Map', new_investment_map_path %>
+
+<div class='clearfix'><p>&nbsp;</p></div>
+
+<table class='table table-bordered table-striped'>
+
+<thead>
+<tr>
+<th>Summary Type</th>
+<th>Account</th>
+<th>Edit</th>
+<th>Delete</th>
+</tr>
+</thead>
+
+<tbody>
+<% @investment_maps.each do |investment_map| %>
+	<tr>
+	<td><%= investment_map.summary_type.stype %></td>
+	<td><%= investment_map.account.account %></td>
+	<td><%= link_to 'Edit', edit_investment_map_path(investment_map.id) %></td>
+	<td><%= link_to 'Delete', investment_map_path(investment_map.id), method: :delete, data: {confirm: "Delete #{investment_map.summary_type.stype} #{investment_map.account.account}?"} %></td>
+	</tr>
+<% end %>
+</tbody>
+
+</table>
