@@ -1,0 +1,29 @@
+<h1><%= @title %></h1>
+
+<%= link_to 'New Summary Type', new_summary_type_path %>
+
+<div class='clearfix'><p>&nbsp;</p></div>
+
+<table class='table table-bordered table-striped'>
+
+<thead>
+<tr>
+<th>Summary Type</th>
+<th>Priority</th>
+<th>Edit</th>
+<th>Delete</th>
+</tr>
+</thead>
+
+<tbody>
+<% @summary_types.each do |summary_type| %>
+	<tr>
+	<td><%= summary_type.stype %></td>
+	<td><%= summary_type.priority %></td>
+	<td><%= link_to 'Edit', edit_summary_type_path(summary_type.id) %></td>
+	<td><%= link_to 'Delete', summary_type_path(summary_type.id), method: :delete, data: {confirm: "Delete #{summary_type.stype}?"} %></td>
+	</tr>
+<% end %>
+</tbody>
+
+</table>
