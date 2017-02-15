@@ -8,6 +8,13 @@ class SummaryTypesController < ApplicationController
 		@summary_types = SummaryType.all.order('priority')
 	end
 
+	def show
+		@summary_type = SummaryType.find(params[:id])
+		@title = "Accounts in #{@summary_type.stype}"
+		accountids = InvestmentMap.where("summary_type_id = ?", @summary_type.id).pluck('DISTINCT account_id')
+		@accounts = Account.where("id in (?)", accountids).order('account')
+	end
+
 	def new
 		@title = 'New Summary Type'
 		@summary_type = SummaryType.new
