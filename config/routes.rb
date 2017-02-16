@@ -50,6 +50,7 @@ Rails.application.routes.draw do
 	resources :investmentbulkinput
 
 	resources :summary_types
+	match '/summary_types_showupdate', to: 'summary_types#showupdate', via: :put
 
 	resources :investment_maps
 
