@@ -43,7 +43,8 @@ class AccountsController < ApplicationController
 
 	def destroy
 		@account = Account.find(params[:id])
-		Investments.where("account_id = ?", @account.id).delete_all
+		Investment.where("account_id = ?", @account.id).delete_all
+		InvestmentMap.where("account_id = ?", @account.id).delete_all
 		@account.delete
 		redirect_to investments_path, notice: "Account #{@account.account} Deleted"
 	end
