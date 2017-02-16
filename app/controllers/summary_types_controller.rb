@@ -11,8 +11,35 @@ class SummaryTypesController < ApplicationController
 	def show
 		@summary_type = SummaryType.find(params[:id])
 		@title = "Accounts in #{@summary_type.stype}"
-		accountids = InvestmentMap.where("summary_type_id = ?", @summary_type.id).pluck('DISTINCT account_id')
-		@accounts = Account.where("id in (?)", accountids).order('account')
+		@accounts = Hash.new
+		Account.all.order('account').each do |account|
+			@accounts[account.id] = Hash.new
+			@accounts[account.id]['name'] = account.account
+			@accounts[account.id]['included'] = false
+		end
+		InvestmentMap.where("summary_type_id = ?", @summary_type.id).pluck('DISTINCT account_id').each do |account_id|
+			@accounts[account_id]['included'] = true
+		end
+	end
+
+	def showupdate
+		@summary_type = SummaryType.find(params[:summary_type])
+		Account.all.each do |account|
+			investment_map = InvestmentMap.where("summary_type_id = ? AND account_id = ?", @summary_type.id, account.id)
+			if params[account.id.to_s] == 'on'
+				if investment_map.count == 0
+					investment_map = InvestmentMap.new
+					investment_map.summary_type_id = @summary_type.id
+					investment_map.account_id = account.id
+					investment_map.save
+				end
+			else
+				if investment_map.count > 0
+					investment_map.delete_all
+				end
+			end
+		end
+		redirect_to summary_types_path, notice: "#{@summary_type.stype} updated"
 	end
 
 	def new

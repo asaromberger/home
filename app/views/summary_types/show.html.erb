@@ -1,13 +1,31 @@
 <h1><%= @title %></h1>
 
+<%= form_tag summary_types_showupdate_path, :method => :put do %>
+
+<%= submit_tag 'Update', class: 'btn btn-large btn-primary' %>
+
+<%= hidden_field_tag :summary_type, @summary_type.id %>
+
+<div class='clearfix'><p>&nbsp;</b></div>
+
 <table>
 
-<tbody>
-<% @accounts.each do |account| %>
+<thead>
 	<tr>
-	<td><%= account.account %></td>
+	<th>Account</th>
+	<th>Included</th>
+	</tr>
+</thead>
+
+<tbody>
+<% @accounts.each do |id, values| %>
+	<tr>
+	<td><%= values['name'] %></td>
+	<td><%= check_box_tag id, nil, values['included'] %></td>
 	</tr>
 <% end %>
 </tbody>
 
 </table>
+
+<% end %>
