@@ -35,7 +35,7 @@
 <% lastpriority = 0 %>
 <% @summaries.each do |id, summary| %>
 	<% if lastpriority + 1 != summary['priority'] %>
-		<tr><td>&hbsp;</td></tr>
+		<tr><td>&nbsp;</td></tr>
 	<% end %>
 	<% lastpriority = summary['priority'] %>
 	<tr>

@@ -1,0 +1,33 @@
+<h1><%= @title %></h1>
+
+<%= form_tag rebalance_types_showupdate_path, :method => :put do %>
+
+<%= submit_tag 'Update', class: 'btn btn-large btn-primary' %>
+
+<%= hidden_field_tag :rebalance_type, @rebalance_type.id %>
+
+<div class='clearfix'><p>&nbsp;</b></div>
+
+<table>
+
+<thead>
+	<tr>
+	<th>Account</th>
+	<th>Included</th>
+	<th>Target</th>
+	</tr>
+</thead>
+
+<tbody>
+<% @accounts.each do |id, values| %>
+	<tr>
+	<td><%= values['name'] %></td>
+	<td><%= check_box_tag id, nil, values['included'] %></td>
+	<td><%= number_field_tag "target#{id}", values['target'], step: :any %></td>
+	</tr>
+<% end %>
+</tbody>
+
+</table>
+
+<% end %>

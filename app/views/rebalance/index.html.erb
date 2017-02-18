@@ -1,0 +1,19 @@
+<h1><%= @title %></h1>
+
+<table>
+
+<thead>
+<tr>
+<th>Account Group</th>
+</tr>
+</thead>
+
+<tbody>
+<% @rebalances.each do |group| %>
+	<tr>
+	<td><%= link_to group.rtype, edit_rebalance_path(group.id) %></td>
+	</tr>
+<% end %>
+</tbody>
+
+</table>
