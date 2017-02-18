@@ -80,6 +80,7 @@ class SummaryTypesController < ApplicationController
 
 	def destroy
 		@summary_type = SummaryType.find(params[:id])
+		InvestmentMap.where("summary_type_id = ?", @summary_type.id).delete_all
 		@summary_type.delete
 			redirect_to summary_types_path, notice: "Summary Type #{@summary_type.stype} Deleted"
 	end

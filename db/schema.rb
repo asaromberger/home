@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170214191606) do
+ActiveRecord::Schema.define(version: 20170217201916) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -106,6 +106,20 @@ ActiveRecord::Schema.define(version: 20170214191606) do
     t.integer  "user_id"
     t.string   "pkey"
     t.hstore   "pvalue"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "rebalance_maps", force: :cascade do |t|
+    t.integer  "rebalance_type_id"
+    t.integer  "account_id"
+    t.decimal  "target"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  create_table "rebalance_types", force: :cascade do |t|
+    t.string   "rtype"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

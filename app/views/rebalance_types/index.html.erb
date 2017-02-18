@@ -1,0 +1,29 @@
+<h1><%= @title %></h1>
+
+<%= link_to 'New Rebalance Type', new_rebalance_type_path %>
+
+<div class='clearfix'><p>&nbsp;</p></div>
+
+<table class='table table-bordered table-striped'>
+
+<thead>
+<tr>
+<th>Rebalance Type</th>
+<th>Show</th>
+<th>Edit</th>
+<th>Delete</th>
+</tr>
+</thead>
+
+<tbody>
+<% @rebalance_types.each do |rebalance_type| %>
+	<tr>
+	<td><%= rebalance_type.rtype %></td>
+	<td><%= link_to 'Show', rebalance_type_path(rebalance_type.id) %></td>
+	<td><%= link_to 'Edit', edit_rebalance_type_path(rebalance_type.id) %></td>
+	<td><%= link_to 'Delete', rebalance_type_path(rebalance_type.id), method: :delete, data: {confirm: "Delete #{rebalance_type.rtype}?"} %></td>
+	</tr>
+<% end %>
+</tbody>
+
+</table>

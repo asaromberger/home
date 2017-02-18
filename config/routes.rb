@@ -52,9 +52,11 @@ Rails.application.routes.draw do
 	resources :summary_types
 	match '/summary_types_showupdate', to: 'summary_types#showupdate', via: :put
 
-	resources :investment_maps
-
 	resources :summary
+
+	resources :rebalance
+	resources :rebalance_types
+	match '/rebalance_types_showupdate', to: 'rebalance_types#showupdate', via: :put
 
 	resources :investmentbulkinput
 	match '/admin_roles', to: 'admin#roles', via: :get

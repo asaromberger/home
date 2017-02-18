@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  rebalance_type_id: 1
+  account_id: 1
+  target: 9.99
+
+two:
+  rebalance_type_id: 1
+  account_id: 1
+  target: 9.99

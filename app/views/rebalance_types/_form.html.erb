@@ -1,0 +1,10 @@
+<%= form_for(@rebalance_type) do |form| %>
+
+	<%= form.label 'Rebalance Type', class: 'col-md-2' %>
+	<%= form.text_field :rtype, class: 'col-md-10' %>
+
+	<div class='clearfix'></div>
+
+	<%= form.submit 'Update Rebalance Type', class: 'btn btn-primary col-md-3' %>
+<% end %>
+

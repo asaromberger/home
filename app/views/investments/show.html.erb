@@ -37,7 +37,11 @@
 	<td><%= values['date'] %>
 	<td align='right'><%= number_with_precision(values['value'], precision: 2) %>
 	<% @headers.each do |header| %>
-		<td align='right'><%= number_with_precision(values[header], precision: 2) %>
+		<% if header == 'Shares' %>
+			<td align='right'><%= number_with_precision(values[header], precision: 3) %>
+		<% else %>
+			<td align='right'><%= number_with_precision(values[header], precision: 2) %>
+		<% end %>
 	<% end %>
 	<td><%= link_to 'Edit', edit_investment_path(id: id, account: @account.id) %>
 	<td><%= link_to 'Delete', investment_path(id: id, account: @account.id), method: :delete, data: {confirm: "Delete entry for #{values['date']}?"} %>

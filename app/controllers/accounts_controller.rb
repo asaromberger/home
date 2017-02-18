@@ -45,6 +45,7 @@ class AccountsController < ApplicationController
 		@account = Account.find(params[:id])
 		Investment.where("account_id = ?", @account.id).delete_all
 		InvestmentMap.where("account_id = ?", @account.id).delete_all
+		Rebalance_maps.where("account_id = ?", @account.id).delete_all
 		@account.delete
 		redirect_to investments_path, notice: "Account #{@account.account} Deleted"
 	end
