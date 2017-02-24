@@ -45,9 +45,30 @@ class AccountsController < ApplicationController
 		@account = Account.find(params[:id])
 		Investment.where("account_id = ?", @account.id).delete_all
 		InvestmentMap.where("account_id = ?", @account.id).delete_all
-		Rebalance_maps.where("account_id = ?", @account.id).delete_all
+		RebalanceMap.where("account_id = ?", @account.id).delete_all
 		@account.delete
 		redirect_to investments_path, notice: "Account #{@account.account} Deleted"
+	end
+
+	def close
+		@account = Account.find(params[:id])
+		investment = Investment.where("account_id = ?", @account.id).order('date DESC')
+		if investment.count > 0
+			investment = investment.first
+			if investment.value != 0
+				newinvestment = Investment.new
+				newinvestment.account_id = @account.id
+				newinvestment.date = investment.date + 1.day
+				newinvestment.value = 0
+				newinvestment.shares = 0
+				newinvestment.pershare = 0
+				newinvestment.guaranteed = 0
+				newinvestment.save
+			end
+		end
+		@account.closed = true
+		@account.save
+		redirect_to investments_path, notice: "Account #{@account.account} Closed"
 	end
 
 private
