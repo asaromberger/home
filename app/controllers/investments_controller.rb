@@ -20,6 +20,7 @@ class InvestmentsController < ApplicationController
 				@accounts[account.id]['date'] = ''
 				@accounts[account.id]['value'] = 0
 			end
+			@accounts[account.id]['closed'] = account.closed
 		end
 	end
 
@@ -59,15 +60,29 @@ class InvestmentsController < ApplicationController
 		lastinvestment = Investment.where("account_id = ?", @account.id).order('date DESC').first
 		if @account.atype == 'cash'
 			@headers = ['value']
-			@investment.value = lastinvestment.value
+			if lastinvestment.blank?
+				@investment.value = 0
+			else
+				@investment.value = lastinvestment.value
+			end
 		elsif @account.atype == 'brokerage'
 			@headers = ['shares', 'pershare']
-			@investment.shares = lastinvestment.shares
-			@investment.pershare = lastinvestment.pershare
+			if lastinvestment.blank?
+				@investment.shares = 0
+				@investment.pershare = 0
+			else
+				@investment.shares = lastinvestment.shares
+				@investment.pershare = lastinvestment.pershare
+			end
 		elsif @account.atype == 'annuity'
 			@headers = ['value', 'guaranteed']
-			@investment.value = lastinvestment.value
-			@investment.guaranteed = lastinvestment.guaranteed
+			if lastinvestment.blank?
+				@investment.value = 0
+				@investment.guaranteed = 0
+			else
+				@investment.value = lastinvestment.value
+				@investment.guaranteed = lastinvestment.guaranteed
+			end
 		end
 	end
 

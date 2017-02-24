@@ -44,6 +44,7 @@ Rails.application.routes.draw do
 	resources :conversations
 
 	resources :accounts
+	match 'account_close', to: 'accounts#close', via: :put
 
 	resources :investments
 
@@ -58,7 +59,6 @@ Rails.application.routes.draw do
 	resources :rebalance_types
 	match '/rebalance_types_showupdate', to: 'rebalance_types#showupdate', via: :put
 
-	resources :investmentbulkinput
 	match '/admin_roles', to: 'admin#roles', via: :get
 	match '/admin_roles_edit', to: 'admin#roles_edit', via: :get
 	match '/admin_roles_update', to: 'admin#roles_update', via: :get
