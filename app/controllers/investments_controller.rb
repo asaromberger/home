@@ -4,11 +4,19 @@ class InvestmentsController < ApplicationController
 	before_action :require_investments
 
 	def index
+		@status = params[:status]
 		@title = 'Accounts'
 		@accounts = Hash.new
 		@errors = params[:errors]
 		@exists = params[:exists]
-		Account.all.order('account').each do |account|
+		if @status == 'open'
+			accounts = Account.where('closed is NULL or closed = false').order('account')
+		elsif @status == 'closed'
+			accounts = Account.where('closed = true').order('account')
+		else
+			accounts = Account.all.order('account')
+		end
+		accounts.each do |account|
 			@accounts[account.id] = Hash.new
 			@accounts[account.id]['account'] = account.account
 			@accounts[account.id]['type'] = account.atype
@@ -25,6 +33,7 @@ class InvestmentsController < ApplicationController
 	end
 
 	def show
+		@status = params[:status]
 		@account = Account.find(params[:id])
 		@title = "#{@account.account}"
 		if @account.atype == 'cash'
@@ -53,6 +62,7 @@ class InvestmentsController < ApplicationController
 	end
 
 	def new
+		@status = params[:status]
 		@account = Account.find(params[:id])
 		@title = "New Entry for #{@account.account}"
 		@investment = Investment.new
@@ -87,6 +97,7 @@ class InvestmentsController < ApplicationController
 	end
 
 	def create
+		@status = params[:status]
 		@account = Account.find(params[:account])
 		@investment = Investment.new(investment_params)
 		@investment.account_id = @account.id
@@ -94,13 +105,14 @@ class InvestmentsController < ApplicationController
 			@investment.value = @investment.shares * @investment.pershare
 		end
 		if @investment.save
-			redirect_to investments_path, notice: 'Item Added'
+			redirect_to investments_path(status: @status), notice: 'Item Added'
 		else
-			redirect_to investments_path, alert: 'Failed to create Item'
+			redirect_to investments_path(status: @status), alert: 'Failed to create Item'
 		end
 	end
 
 	def edit
+		@status = params[:status]
 		@account = Account.find(params[:account])
 		@title = "Edit Entry for #{@account.account}"
 		@investment = Investment.find(params[:id])
@@ -114,22 +126,24 @@ class InvestmentsController < ApplicationController
 	end
 
 	def update
+		@status = params[:status]
 		@account = Account.find(params[:account])
 		@investment = Investment.find(params[:id])
 		if @account.atype == 'brokerage'
 			params[:investment][:value] = params[:investment][:shares].to_f * params[:investment][:pershare].to_f
 		end
 		if @investment.update(investment_params)
-			redirect_to investments_path, notice: 'Item Updated'
+			redirect_to investments_path(status: @status), notice: 'Item Updated'
 		else
-			redirect_to investments_path, alert: 'Failed to update Item'
+			redirect_to investments_path(status: @status), alert: 'Failed to update Item'
 		end
 	end
 
 	def destroy
+		@status = params[:status]
 		@investment = Investment.find(params[:id])
 		@investment.delete
-		redirect_to investments_path, notice: "Item Deleted"
+		redirect_to investments_path(status: @status), notice: "Item Deleted"
 	end
 
 private
