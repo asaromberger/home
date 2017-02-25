@@ -2,6 +2,8 @@
 
 	<%= hidden_field_tag :account, @account.id %>
 
+	<%= hidden_field_tag :status, @status %>
+
 	<%= form.label :date, class: 'col-md-2' %>
 	<%= form.date_select :date, {value: @investment.date}, class: 'col-md-2' %>
 
