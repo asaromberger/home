@@ -40,6 +40,8 @@ class SummaryController < ApplicationController
 				@years.each do |year|
 					if t[year]
 						@summaries[summary.id][year] = @summaries[summary.id][year] + t[year]
+					elsif t[year - 1]
+						@summaries[summary.id][year] = @summaries[summary.id][year] + t[year - 1]
 					end
 				end
 			end
