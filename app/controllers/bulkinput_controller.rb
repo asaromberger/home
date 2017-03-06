@@ -14,9 +14,11 @@ class BulkinputController < ApplicationController
 		@title = 'Classify Bulk Input'
 		@document = params[:document]
 		@documentname = @document.original_filename
-		File.open(Rails.root.join(@document.original_filename), 'wb') do |file|
+		path = Rails.root.join(@document.original_filename)
+		File.open(path, 'wb') do |file|
 			@input = @document.read
 		end
+		File.delete(path) if File.exists?(path)
 		@errors = []
 		lines = @input.split("\n")
 		if lines[0].gsub(/:.*/, '') == 'OFXHEADER'
