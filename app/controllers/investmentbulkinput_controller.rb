@@ -16,9 +16,11 @@ class InvestmentbulkinputController < ApplicationController
 		@account = Account.find(params[:account])
 		@document = params[:document]
 		@documentname = @document.original_filename
-		File.open(Rails.root.join(@document.original_filename), 'wb') do |file|
+		path = Rails.root.join(@document.original_filename)
+		File.open(path, 'wb') do |file|
 			@input = @document.read
 		end
+		File.delete(path) if File.exists?(path)
 		@errors = []
 		@exists = 0
 		lines = @input.split("\n")
