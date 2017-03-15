@@ -66,15 +66,11 @@ class SummaryTypesController < ApplicationController
 	end
 
 	def update
-		if SummaryType.where("stype = ?", params[:summary_type][:stype]).count > 0
-			redirect_to summary_types_path, alert: 'Summary Type already exists'
+		@summary_type = SummaryType.find(params[:id])
+		if @summary_type.update(summary_type_params)
+			redirect_to summary_types_path, notice: 'Summary Type Updated'
 		else
-			@summary_type = SummaryType.find(params[:id])
-			if @summary_type.update(summary_type_params)
-				redirect_to summary_types_path, notice: 'Summary Type Updated'
-			else
-				redirect_to summary_types_path, alert: 'Failed to update Summary Type'
-			end
+			redirect_to summary_types_path, alert: 'Failed to update Summary Type'
 		end
 	end
 
