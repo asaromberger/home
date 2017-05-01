@@ -1,6 +1,6 @@
 <h1><%= @title %></h1>
 
-File contains a series of lines with the following tab separated columns:
+<p>File contains a series of lines with the following tab separated columns:</p>
 <ul>
 <li>Date either as MM/DD/YYYY or YYYY-MM-DD</li>
 <li>+/-</li>
@@ -8,6 +8,9 @@ File contains a series of lines with the following tab separated columns:
 <li>what</li>
 <li>Amount</li>
 </ul>
+<p>Or file is a Quicken file</p>
+
+<div class='clearfix'><p>&nbsp;</p></div>
 
 <%= form_tag bulkinput_index_path, multipart: true do %>
 

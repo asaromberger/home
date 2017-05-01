@@ -13,6 +13,17 @@
 	</ul>
 <% end %>
 
+<p>Items can be classified in the following ways:</p>
+<ul>
+<li>If <b>Map</b> contains the right selection, you can select it</li>
+<li>Specify a <b>Map To</b> from the <b>Manage What</b> list</li>
+	<ul>
+	<li>If the item is a new one not in the <b>Manage What</b> list, you will need to also select a <b>Category</b></li>
+	</ul>
+</ul>
+
+<div class='clearfix'><p>&nbsp;</p></div>
+
 <%= form_tag new_bulkinput_path, method: :get do %>
 
 	<%= hidden_field_tag :documentname, @documentname %>
