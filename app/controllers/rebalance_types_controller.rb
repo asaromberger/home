@@ -12,14 +12,16 @@ class RebalanceTypesController < ApplicationController
 		@rebalance_type = RebalanceType.find(params[:id])
 		@title = "Accounts in #{@rebalance_type.rtype}"
 		@accounts = Hash.new
-		Account.all.order('account').each do |account|
+		Account.where("closed IS NULL OR closed = false").order('account').each do |account|
 			@accounts[account.id] = Hash.new
 			@accounts[account.id]['name'] = account.account
 			@accounts[account.id]['included'] = false
 		end
 		RebalanceMap.where("rebalance_type_id = ?", @rebalance_type.id).each do |map|
-			@accounts[map.account_id]['included'] = true
-			@accounts[map.account_id]['target'] = map.target
+			if @accounts.key?(map.account_id)
+				@accounts[map.account_id]['included'] = true
+				@accounts[map.account_id]['target'] = map.target
+			end
 		end
 	end
 
