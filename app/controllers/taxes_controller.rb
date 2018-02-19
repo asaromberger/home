@@ -70,10 +70,14 @@ class TaxesController < ApplicationController
 		@items = Item.joins(:what).where("EXTRACT(year FROM date) = ? AND category_id in (?)", params[:year], categoryids).order('date')
 		@summary = Hash.new
 		@items.each do |item|
+			amount = item.amount
+			if item.pm == '-'
+				amount = -amount
+			end
 			if @summary[item.what.what]
-				@summary[item.what.what] = @summary[item.what.what] + item.amount
+				@summary[item.what.what] = @summary[item.what.what] + amount
 			else
-				@summary[item.what.what] = item.amount
+				@summary[item.what.what] = amount
 			end
 		end
 	end
