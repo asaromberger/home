@@ -31,6 +31,8 @@ Rails.application.routes.draw do
 
 	resources :runningbudget
 
+	resources :donations
+
 	resources :rentalcosts
 
 	resources :transfers
