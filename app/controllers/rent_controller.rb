@@ -14,7 +14,7 @@ class RentController < ApplicationController
 		else
 			@toyear = Item.all.order('date DESC').first.date.year
 		end
-		@title = "Donations from #{@fromyear} to #{@toyear}"
+		@title = "Rents from #{@fromyear} to #{@toyear}"
 		@pickyears = []
 		Item.all.pluck("DISTINCT EXTRACT(year FROM date)").each do |year|
 			@pickyears.push(year.to_i)
