@@ -4,7 +4,7 @@
 	<a href='#' data-toggle='dropdown' class='dropdown-toggle'>From Year <b class='caret'></b></a>
 	<ul class='dropdown-menu'>
 		<% @pickyears.each do |year| %>
-			<li><%= link_to year, donations_path(fromyear: year, toyear: @toyear) %></li>
+			<li><%= link_to year, rent_index_path(fromyear: year, toyear: @toyear) %></li>
 		<% end %>
 	</ul>
 </div>
@@ -13,7 +13,7 @@
 	<a href='#' data-toggle='dropdown' class='dropdown-toggle'>To Year <b class='caret'></b></a>
 	<ul class='dropdown-menu'>
 		<% @pickyears.each do |year| %>
-			<li><%= link_to year, donations_path(fromyear: @fromyear, toyear:year) %></li>
+			<li><%= link_to year, rent_index_path(fromyear: @fromyear, toyear:year) %></li>
 		<% end %>
 	</ul>
 </div>
