@@ -1,0 +1,45 @@
+<h1><%= @title %></h1>
+
+<div class='dropdown'>
+	<a href='#' data-toggle='dropdown' class='dropdown-toggle'>From Year <b class='caret'></b></a>
+	<ul class='dropdown-menu'>
+		<% @pickyears.each do |year| %>
+			<li><%= link_to year, donations_path(fromyear: year, toyear: @toyear) %></li>
+		<% end %>
+	</ul>
+</div>
+
+<div class='dropdown'>
+	<a href='#' data-toggle='dropdown' class='dropdown-toggle'>To Year <b class='caret'></b></a>
+	<ul class='dropdown-menu'>
+		<% @pickyears.each do |year| %>
+			<li><%= link_to year, donations_path(fromyear: @fromyear, toyear:year) %></li>
+		<% end %>
+	</ul>
+</div>
+
+<div class='clearfix'><p>&nbsp;</p></div>
+
+<table class='table-bordered table-striped'>
+
+<thead>
+<tr>
+<th>Unit</th>
+<th>Rent</th>
+<th>From</th>
+<th>To</th>
+</tr>
+</thead>
+
+<tbody>
+<% @rows.each do |index, values| %>
+	<tr>
+	<td><%= values['unit'] %>
+	<td><%= values['rent'] %></td>
+	<td><%= values['from'] %></td>
+	<td><%= values['to'] %></td>
+	</tr>
+<% end %>
+</tbody>
+
+</table>

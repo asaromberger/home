@@ -35,6 +35,8 @@ Rails.application.routes.draw do
 
 	resources :rentalcosts
 
+	resources :rent
+
 	resources :transfers
 
 	resources :unused
