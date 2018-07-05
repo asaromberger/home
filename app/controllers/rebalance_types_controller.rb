@@ -88,7 +88,7 @@ class RebalanceTypesController < ApplicationController
 
 	def destroy
 		@rebalance_type = RebalanceType.find(params[:id])
-		Rebalance_map.where("rebalance_type_id = ?", params[:id]).delete_all
+		RebalanceMap.where("rebalance_type_id = ?", params[:id]).delete_all
 		@rebalance_type.delete
 		redirect_to rebalance_types_path, notice: "Rebalance Type #{@rebalance_type.rtype} Deleted"
 	end
