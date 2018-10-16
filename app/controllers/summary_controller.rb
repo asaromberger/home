@@ -7,7 +7,7 @@ class SummaryController < ApplicationController
 		if params[:fromyear]
 			@fromyear = params[:fromyear]
 		else
-			@fromyear = Investment.all.order('date').first.date.year
+			@fromyear = Time.now.year - 10
 		end
 		if params[:toyear]
 			@toyear = params[:toyear]
