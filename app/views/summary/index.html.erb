@@ -41,7 +41,7 @@
 	<tr>
 	<td><%= link_to summary['name'], summary_path(id: id, fromyear: @fromyear, toyear: @toyear) %></td>
 	<% @years.each do |year| %>
-		<td><%= link_to number_with_precision(summary[year], precision: 2), summary_path(id: id, fromyear: year, toyear: year) %>
+		<td><%= link_to number_with_precision(summary[year], precision: 2), summary_path(id: id, fromyear: year, toyear: year) %></td>
 	<% end %>
 	</tr>
 <% end %>

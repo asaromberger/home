@@ -61,7 +61,7 @@
 		<% end %>
 	<% end %>
 	<tr>
-	<td colspan=2 class='totaltitle'>TOTAL</th>
+	<td colspan=2 class='totaltitle'>TOTAL</td>
 	<% @years.each do |year| %>
 		<td class='total'><%= number_with_precision(@ctotals[ctype][year], precision: 2) %></td>
 	<% end %>

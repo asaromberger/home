@@ -50,6 +50,12 @@ class DonationsController < ApplicationController
 		end
 	end
 
+	def show
+		what = What.find(params[:id])
+		@title = "Donations to #{what.what}"
+		@items = Item.where("what_id = ?", params[:id]).order('date')
+	end
+
 private
 
 	def require_expenses
