@@ -23,6 +23,7 @@ Click on a column header to sort by that column<br/>
 <th class='table sorttable_alpha' id='TAX'>Tax</th>
 <th class='table sorttable_alpha' id='EDIT'>Edit</th>
 <th class='table sorttable_alpha' id='DELETE'>Delete</th>
+<th class='table sorttable_alpha' id='DETAILS'>Details</th>
 </tr>
 </thead>
 
@@ -35,6 +36,7 @@ Click on a column header to sort by that column<br/>
 	<td><%= category.tax %></td>
 	<td><%= link_to 'Edit', edit_category_path(category.id) %></td>
 	<td><%= link_to 'Delete', category_path(category.id), method: :delete, data: {confirm: "Delete #{category.ctype}/#{category.category}/#{category.subcategory}/#{category.tax}?"} %></td>
+	<td><%= link_to 'Details', category_path(category.id) %></td>
 	</tr>
 <% end %>
 </tbody>
@@ -59,6 +61,7 @@ Click on a column header to sort by that column<br/>
     col_width_3: "15", //TAX
     col_width_4: "1", //EDIT
     col_width_5: "1", //DELETE
+    col_width_6: "1", //DELETE
     display_all_text: "<*>",
   }
   sorttable.makeSortable(document.getElementById('table_report'), 1);
