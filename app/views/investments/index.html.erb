@@ -22,11 +22,11 @@
 <tbody>
 <% @accounts.each do |id, values| %>
 	<tr>
-	<td><%= values['account'] %>
-	<td><%= values['type'] %>
-	<td><%= values['date'] %>
-	<td align='right'><%= number_with_precision(values['value'], precision: 2) %>
-	<td><%= link_to 'Details', investment_path(id: id, status: @status) %>
+	<td><%= values['account'] %></td>
+	<td><%= values['type'] %></td>
+	<td><%= values['date'] %></td>
+	<td align='right'><%= number_with_precision(values['value'], precision: 2) %></td>
+	<td><%= link_to 'Details', investment_path(id: id, status: @status) %></td>
 	<td><%= link_to 'Edit', edit_account_path(id, status: @status) %></td>
 	<td><%= link_to 'Delete', account_path(id, status: @status), method: :delete, data: {confirm: "Delete #{values['account']} and all associated records?"} %></td>
 	<% if values['closed'] == true %>

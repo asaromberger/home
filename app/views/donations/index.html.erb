@@ -34,9 +34,9 @@
 <tbody>
 <% @donations.each do |id, values| %>
 	<tr>
-	<td><%= values['name'] %></td>
+	<td><%= link_to values['name'], donation_path(id: id) %></td>
 	<% @years.each do |year| %>
-		<td><%= values[year] %></td>
+		<td align=right><%= number_with_precision(values[year], precision: 2) %></td>
 	<% end %>
 	</tr>
 <% end %>

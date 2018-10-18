@@ -34,17 +34,17 @@
 <tbody>
 <% @investments.each do |id, values| %>
 	<tr>
-	<td><%= values['date'] %>
-	<td align='right'><%= number_with_precision(values['value'], precision: 2) %>
+	<td><%= values['date'] %></td>
+	<td align='right'><%= number_with_precision(values['value'], precision: 2) %></td>
 	<% @headers.each do |header| %>
 		<% if header == 'Shares' %>
-			<td align='right'><%= number_with_precision(values[header], precision: 3) %>
+			<td align='right'><%= number_with_precision(values[header], precision: 3) %></td>
 		<% else %>
-			<td align='right'><%= number_with_precision(values[header], precision: 2) %>
+			<td align='right'><%= number_with_precision(values[header], precision: 2) %></td>
 		<% end %>
 	<% end %>
-	<td><%= link_to 'Edit', edit_investment_path(id: id, account: @account.id, status: @status) %>
-	<td><%= link_to 'Delete', investment_path(id: id, account: @account.id, status: @status), method: :delete, data: {confirm: "Delete entry for #{values['date']}?"} %>
+	<td><%= link_to 'Edit', edit_investment_path(id: id, account: @account.id, status: @status) %></td>
+	<td><%= link_to 'Delete', investment_path(id: id, account: @account.id, status: @status), method: :delete, data: {confirm: "Delete entry for #{values['date']}?"} %></td>
 	</tr>
 <% end %>
 </tbody>
