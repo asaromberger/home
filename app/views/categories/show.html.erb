@@ -1,0 +1,19 @@
+<h1><%= @title %></h1>
+
+<table>
+
+<thead>
+<tr>
+<th>What</th>
+</tr>
+</thead>
+
+<tbody>
+<% @whats.each do |what| %>
+	<tr>
+	<td><%= link_to what.what, what_path(id: what.id), method: :get %></td>
+	</tr>
+<% end %>
+</tbody>
+
+</table>

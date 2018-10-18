@@ -36,6 +36,12 @@ class CategoriesController < ApplicationController
 		end
 	end
 
+	def show
+		@category = Category.find(params[:id])
+		@title = "What maps to #{@category.ctype}/#{@category.category}/#{@category.subcategory}"
+		@whats = What.where("category_id = ?", @category.id).order('what')
+	end
+
 	def destroy
 		@category = Category.find(params[:id])
 		if What.where("category_id = ?", @category.id).count > 0
