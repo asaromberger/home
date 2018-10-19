@@ -95,6 +95,13 @@ class RentalcostsController < ApplicationController
 		end
 	end
 
+	def show
+		@title = "#{params[:category]}/#{params[:subcategory]}"
+		category_id = Category.where("ctype = 'rental' AND category = ? AND subcategory = ?", params[:category], params['subcategory']).pluck('id').first
+		what_ids = What.where("category_id = ?", category_id).pluck('DISTINCT id')
+		@items = Item.where("what_id IN (?)", what_ids).order('date')
+	end
+
 private
 
 	def require_expenses
