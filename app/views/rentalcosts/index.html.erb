@@ -65,7 +65,7 @@
 				<% end %>
 				<td class='subtotal'><%= number_with_precision(t, precision: 2) %></td>
 			<% else %>
-				<td><%= subcat %></td>
+				<td><%= link_to subcat, rentalcost_path(id: 0, fromyear: @fromyear, toyear: @toyear, category: cat, subcategory: subcat) %></td>
 				<% @years.each do |year| %>
 					<td class='number'><%= number_with_precision(subcatdata[year], precision: 2) %></td>
 				<% end %>
@@ -78,7 +78,7 @@
 	<% if catdata['Upkeep'] %>
 		<tr>
 		<% subcatdata = catdata['Upkeep'] %>
-		<td>Upkeep</td>
+		<td><%= link_to 'Upkeep', rentalcost_path(id: 0, fromyear: @fromyear, toyear: @toyear, category: cat, subcategory: 'Upkeep') %></td>
 		<% @years.each do |year| %>
 			<% if subcatdata[year] %>
 				<td class='number'><%= number_with_precision(subcatdata[year], precision: 2) %></td>
