@@ -7,6 +7,10 @@ Rails.application.routes.draw do
 
 	resources :jiras
 
+	resources :geneaologies
+	match '/geneaologies_bulkinput', to: 'geneaologies#bulkinput', via: :get
+	match '/geneaologies_bulkinputupdate', to: 'geneaologies#bulkinputupdate', via: :post
+
 	resources :users
 	match '/users_password_reset', to: 'users#password_reset', via: :get
 	match '/users_password_reset_update', to: 'users#password_reset_update', via: :put
@@ -59,7 +63,10 @@ Rails.application.routes.draw do
 
 	resources :summary
 
+	resources :charts
+
 	resources :rebalance
+
 	resources :rebalance_types
 	match '/rebalance_types_showupdate', to: 'rebalance_types#showupdate', via: :put
 
