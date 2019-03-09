@@ -1,0 +1,24 @@
+<h1><%= @title %></h1>
+
+<% if @errors && @errors.count > 0 %>
+Notes:
+<ul>
+<% @errors.each do |error| %>
+	<li><%= error %></li>
+<% end %>
+</ul>
+<% end %>
+
+<p>File is a GED file</p>
+
+<div class='clearfix'><p>&nbsp;</p></div>
+
+<%= form_tag geneaologies_bulkinputupdate_path, multipart: true do %>
+
+<%= file_field_tag :document %>
+
+<div class='clearfix'><p>&nbsp;</p></div>
+
+<%= submit_tag 'Submit', class: 'btn btn-primary col_md_1' %>
+
+<% end %>
