@@ -57,6 +57,40 @@ class AdminController < ApplicationController
 		end
 	end
 
+	def datacheck
+		@title = 'Data Check'
+		@tables = Hash.new
+		tables = ActiveRecord::Base.connection.tables.sort
+		tables.each do |table|
+			if table != 'ar_internal_metadata' && table != 'schema_migrations'
+				tableref = table.classify.constantize
+				tablename = tableref.name
+				table_columns = tableref.columns
+				@tables[tablename] = Hash.new
+				@tables[tablename]['ref'] = tableref
+				@tables[tablename]['columns'] = table_columns
+				@tables[tablename]['ids'] = tableref.all.order('id').pluck('id')
+
+			end
+		end
+		@tables.each do |name, table|
+			tableref = table['ref']
+			@tables[name]['xrefs'] = []
+			@tables[name]['errors'] = []
+			table['columns'].each do |column|
+				col = column.name
+				if col.match('_id$')
+					xrefname = col.gsub(/_id$/, '')
+					xref = xrefname.classify.constantize
+					@tables[name]['errors'].push("References: #{xref.name}")
+					tableref.where("#{col} NOT IN (?)", @tables[xref.name]['ids']).each do |t|
+						@tables[name]['errors'].push("#{name}[#{t.id}]:#{col} = #{t.col} MISSING")
+					end
+				end
+			end
+		end
+	end
+
 private
 	
 	def require_admin

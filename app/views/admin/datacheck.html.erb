@@ -1,0 +1,12 @@
+<h1><%= @title %></h1>
+
+<ul>
+<% @tables.each do |name, table| %>
+	<li><b><%= name %></b> (<%= table['ids'].count %>)</li>
+	<ul>
+		<% table['errors'].each do |error| %>
+			<li><%= error %></li>
+		<% end %>
+	</ul>
+<% end %>
+</ul>
