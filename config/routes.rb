@@ -74,5 +74,6 @@ Rails.application.routes.draw do
 	match '/admin_roles_edit', to: 'admin#roles_edit', via: :get
 	match '/admin_roles_update', to: 'admin#roles_update', via: :get
 	match '/admin_schema', to: 'admin#schema', via: :get
+	match '/admin_datacheck', to: 'admin#datacheck', via: :get
 
 end
