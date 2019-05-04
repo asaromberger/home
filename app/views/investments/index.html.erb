@@ -20,11 +20,16 @@
 </thead>
 
 <tbody>
+<% date = Time.now.to_date - 28.days %>
 <% @accounts.each do |id, values| %>
 	<tr>
 	<td><%= values['account'] %></td>
 	<td><%= values['type'] %></td>
-	<td><%= values['date'] %></td>
+	<% if values['date'] != '' && values['date'] < date %>
+		<td style='background-color:#ffff00;'><%= values['date'] %></td>
+	<% else %>
+		<td><%= values['date'] %></td>
+	<% end %>
 	<td align='right'><%= number_with_precision(values['value'], precision: 2) %></td>
 	<td><%= link_to 'Details', investment_path(id: id, status: @status) %></td>
 	<td><%= link_to 'Edit', edit_account_path(id, status: @status) %></td>
