@@ -84,7 +84,7 @@ class AdminController < ApplicationController
 					xref = xrefname.classify.constantize
 					@tables[name]['errors'].push("References: #{xref.name}")
 					tableref.where("#{col} NOT IN (?)", @tables[xref.name]['ids']).each do |t|
-						@tables[name]['errors'].push("#{name}[#{t.id}]:#{col} = #{t.col} MISSING")
+						@tables[name]['errors'].push("#{name}[#{t.id}]:#{col} = ${t.col} MISSING")
 					end
 				end
 			end
