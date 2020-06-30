@@ -5,6 +5,10 @@ class BulkinputController < ApplicationController
 
 	def edit
 		@title = 'Bulk Input'
+		@accounts = [['','']]
+		Accountmap.all.order('ctype').pluck('DISTINCT ctype').each do |type|
+		@accounts.push([type, type])
+		end
 	end
 
 	def create
@@ -88,25 +92,36 @@ class BulkinputController < ApplicationController
 				end
 			end
 		else
-			# Flat File Input
+@errors.push("CSV");
+			if params[:account].blank?
+				@account = ''
+			else
+				@account = params[:account] + ':'
+			end
+			# CSV File Input
+			lines = lines.reverse
 			lines.each do |line|
-				fields = line.split("\t")
-				if fields[4]
-					date = fields[0].gsub(/^\s*/, '').gsub(/\s*$/, '')
-					pm = fields[1].gsub(/^\s*/, '').gsub(/\s*$/, '')
-					check = fields[2].gsub(/^\s*/, '').gsub(/\s*$/, '')
-					what = fields[3].gsub(/^\s*/, '').gsub(/\s*$/, '')
-					amount = fields[4].gsub(/^\s*/, '').gsub(/\s*$/, '')
-					if date.match('^[0-9][0-9]/[0-9][0-9]/[0-9][0-9][0-9][0-9]$')
-						# MM/DD/YYYY
-						month = date[0..1]
-						day = date[3..4]
-						year = date[6..9]
-					elsif date.match('^[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]$')
-						# YYYY-MM-DD
-						month = date[5..6]
-						day = date[8..9]
-						year = date[0..3]
+				fields = line.split(",")
+				if fields[2]
+					date = fields[2].gsub(/^"*\s*/, '').gsub(/\s*"*$/, '')
+					check = fields[3].gsub(/^"*\s*/, '').gsub(/\s*"*$/, '')
+					what = @account + fields[4].gsub(/^"*\s*/, '').gsub(/\s*"*$/, '')
+					amount = fields[6].gsub(/^"*\s*/, '').gsub(/\s*"*$/, '')
+					if amount[0..0] == '-'
+						pm = '-'
+						amount = amount.gsub(/-/, '')
+					else
+						pm = '+'
+					end
+					datesep = date.split("/")
+					if datesep[0].to_i > 100
+						month = datesep[1]
+						day = datesep[2]
+						year = datesep[0]
+					elsif datesep[2].to_i > 100
+						month = datesep[0]
+						day = datesep[1]
+						year = datesep[2]
 					else
 						@errors.push("BAD DATE: #{date}")
 						month = '01'
@@ -257,7 +272,7 @@ class BulkinputController < ApplicationController
 			@categorylist.push(["#{category.ctype}/#{category.category}/#{category.subcategory}/#{category.tax}", category.id])
 		end
 		if @table.count == 0
-			redirect_to edit_bulkinput_path(id: 0), notice: "File #{@documentname} is complete"
+			#redirect_to edit_bulkinput_path(id: 0), notice: "File #{@documentname} is complete"
 		end
 	end
 

@@ -14,10 +14,14 @@
 
 <%= form_tag bulkinput_index_path, multipart: true do %>
 
+<%= select_tag :account, options_for_select(@accounts) %>
+
+<div class='clearfix'><p>&nbsp;</p></div>
+
 <%= file_field_tag :document %>
 
 <div class='clearfix'><p>&nbsp;</p></div>
 
-<%= submit_tag 'Submit', class: 'btn btn-primary col_md_1' %>
+<%= submit_tag 'Submit', class: 'btn btn-primary col-md-1' %>
 
 <% end %>
