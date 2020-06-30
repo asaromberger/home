@@ -2,11 +2,20 @@
 
 <% if @errors && @errors.count > 0 %>
 Notes:
-<ul>
+<table>
 <% @errors.each do |error| %>
-	<li><%= error %></li>
+	<tr>
+	<% (1..error[0]).each do |i| %>
+		<td></td>
+	<% end %>
+	<td><%= error[1] %></td>
+	<% (error[0] + 1..5).each do |i| %>
+		<td></td>
+	<% end %>
+	<td><%= error[2] %></td>
+	</tr>
 <% end %>
-</ul>
+</table>
 <% end %>
 
 <p>File is a GED file</p>

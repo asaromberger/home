@@ -44,7 +44,11 @@ class GeneaologiesController < ApplicationController
 		@errors = []
 		lines = @input.split("\n")
 		lines.each do |line|
-			@errors.push(line);
+			indent = line.sub(/\s.*/, '').to_i
+			line = line.sub(/[^\s]*[\s]+/, '')
+			type = line.sub(/\s.*/, '')
+			line = line.sub(/[^\s]*[\s]+/, '')
+			@errors.push([indent, type, line]);
 		end
 		render 'bulkinput'
 	end

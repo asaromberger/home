@@ -66,7 +66,11 @@ class InvestmentsController < ApplicationController
 		@account = Account.find(params[:id])
 		@title = "New Entry for #{@account.account}"
 		@investment = Investment.new
-		@investment.date = (Time.now - 1.month).end_of_month.to_date
+		if session['investmentdate'].blank?
+			@investment.date = (Time.now - 1.month).end_of_month.to_date
+		else
+			@investment.date = session['investmentdate']
+		end
 		lastinvestment = Investment.where("account_id = ?", @account.id).order('date DESC').first
 		if @account.atype == 'cash'
 			@headers = ['value']
@@ -104,6 +108,7 @@ class InvestmentsController < ApplicationController
 		if @account.atype == 'brokerage'
 			@investment.value = @investment.shares * @investment.pershare
 		end
+		session['investmentdate'] = @investment.date
 		if @investment.save
 			redirect_to investments_path(status: @status), notice: 'Item Added'
 		else
