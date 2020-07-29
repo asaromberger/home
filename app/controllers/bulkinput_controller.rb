@@ -92,22 +92,22 @@ class BulkinputController < ApplicationController
 				end
 			end
 		else
-@errors.push("CSV");
 			if params[:account].blank?
-				@account = ''
+				redirect_to edit_bulkinput_path(id: 0), alert: "Need to specify an account"
+				return
 			else
 				@account = params[:account] + ':'
 			end
 			# CSV File Input
+			lines = parse(@input)
 			lines = lines.reverse
-			lines.each do |line|
-				fields = line.split(",")
-				if fields[2]
-					date = fields[2].gsub(/^"*\s*/, '').gsub(/\s*"*$/, '')
-					check = fields[3].gsub(/^"*\s*/, '').gsub(/\s*"*$/, '')
-					what = @account + fields[4].gsub(/^"*\s*/, '').gsub(/\s*"*$/, '')
-					amount = fields[6].gsub(/^"*\s*/, '').gsub(/\s*"*$/, '')
-					if amount[0..0] == '-'
+			lines.each do |fields|
+				if fields[0]
+					date = fields[0].gsub(/^"*\s*/, '').gsub(/\s*"*$/, '')
+					check = fields[1].gsub(/^"*\s*/, '').gsub(/\s*"*$/, '')
+					what = @account + fields[2].gsub(/^"*\s*/, '').gsub(/\s*"*$/, '')
+					amount = fields[3].gsub(/^"*\s*/, '').gsub(/\s*"*$/, '')
+					if amount[0] == '-'
 						pm = '-'
 						amount = amount.gsub(/-/, '')
 					else
@@ -277,6 +277,49 @@ class BulkinputController < ApplicationController
 	end
 
 private
+
+	def parse(input)
+		lines = []
+		flag = 0
+		ind = 0
+		while input[ind]
+			field = ''
+			if input[ind] == '"'
+				ind = ind + 1
+				while input[ind] && input[ind] != '"'
+					field = field + input[ind]
+					ind = ind + 1
+				end
+				ind = ind + 2
+			else
+				while input[ind] && ! input[ind].match(/[,\r\n]/)
+					field = field + input[ind]
+					ind = ind + 1
+				end
+				ind = ind + 1
+			end
+			if flag == 0
+				if field == ''
+					next
+				end
+				date = field
+				flag = 1
+			elsif flag == 1
+				checkno = field
+				flag = 2
+			elsif flag == 2
+				what = field
+				flag = 3
+			elsif flag == 3
+				flag = 4
+			else
+				amount = field
+				lines.push([date, checkno, what, amount])
+				flag = 0
+			end
+		end
+		return lines
+	end
 
 	def require_expenses
 		unless has_role(current_user.id, 'expenses')
