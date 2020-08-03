@@ -18,13 +18,9 @@ class BulkinputController < ApplicationController
 		@title = 'Classify Bulk Input'
 		@document = params[:document]
 		@documentname = @document.original_filename
-		path = Rails.root.join(@document.original_filename)
-		File.open(path, 'wb') do |file|
-			@input = @document.read
-		end
-		File.delete(path) if File.exists?(path)
+		@input = File.open(@document.tempfile, 'rb').read
 		@errors = []
-		lines = @input.split("\n")
+		lines = @input.split(/[\n\r]+/)
 		if lines[0].gsub(/:.*/, '') == 'OFXHEADER'
 			# Quicken input
 			accountmap = Hash.new
@@ -99,9 +95,9 @@ class BulkinputController < ApplicationController
 				@account = params[:account] + ':'
 			end
 			# CSV File Input
-			lines = parse(@input)
 			lines = lines.reverse
-			lines.each do |fields|
+			lines.each do |line|
+				fields = parse(line)
 				if fields[0]
 					date = fields[0].gsub(/^"*\s*/, '').gsub(/\s*"*$/, '')
 					check = fields[1].gsub(/^"*\s*/, '').gsub(/\s*"*$/, '')
@@ -278,22 +274,21 @@ class BulkinputController < ApplicationController
 
 private
 
-	def parse(input)
-		lines = []
+	def parse(line)
 		flag = 0
 		ind = 0
-		while input[ind]
+		while line[ind]
 			field = ''
-			if input[ind] == '"'
+			if line[ind] == '"'
 				ind = ind + 1
-				while input[ind] && input[ind] != '"'
-					field = field + input[ind]
+				while line[ind] && line[ind] != '"'
+					field = field + line[ind]
 					ind = ind + 1
 				end
 				ind = ind + 2
 			else
-				while input[ind] && ! input[ind].match(/[,\r\n]/)
-					field = field + input[ind]
+				while line[ind] && ! line[ind].match(/[,\r\n]/)
+					field = field + line[ind]
 					ind = ind + 1
 				end
 				ind = ind + 1
@@ -314,11 +309,10 @@ private
 				flag = 4
 			else
 				amount = field
-				lines.push([date, checkno, what, amount])
-				flag = 0
+				return [date, checkno, what, amount]
 			end
 		end
-		return lines
+		return []
 	end
 
 	def require_expenses
