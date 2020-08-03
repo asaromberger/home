@@ -5,7 +5,7 @@ class AdminController < ApplicationController
 
 	def roles
 		@title = 'Roles Administration'
-		@user = User.find(current_user)
+		@user = User.find(current_user.id)
 	end
 
 	def roles_edit
