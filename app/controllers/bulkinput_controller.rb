@@ -18,21 +18,21 @@ class BulkinputController < ApplicationController
 		@title = 'Classify Bulk Input'
 		@document = params[:document]
 		@documentname = @document.original_filename
-		@input = File.open(@document.tempfile, 'rb').read
+		if @documentname.blank?
+			redirect_to edit_bulkinput_path(id: 0), alert: "No file specified"
+			return
+		end
+		@input = File.open(@document.tempfile, 'rb').read.gsub(/[\r\n]+/, "\n")
+		lines = CSV.parse(@input)
 		@errors = []
-		lines = @input.split(/[\n\r]+/)
-		if lines[0].gsub(/:.*/, '') == 'OFXHEADER'
+		if lines[0][0] && lines[0][0].gsub(/:.*/, '') == 'OFXHEADER'
 			# Quicken input
 			accountmap = Hash.new
 			Accountmap.all.each do |map|
 				accountmap[map.account] = map.ctype
 			end
 			# remerge lines
-			tmp = ''
-			lines.each do |line|
-				tmp = "#{tmp}#{line}"
-			end
-			lines = tmp.split("<");
+			lines = @input.split("<");
 			type = '';
 			date = '';
 			amount = '';
@@ -96,13 +96,16 @@ class BulkinputController < ApplicationController
 			end
 			# CSV File Input
 			lines = lines.reverse
-			lines.each do |line|
-				fields = parse(line)
-				if fields[0]
-					date = fields[0].gsub(/^"*\s*/, '').gsub(/\s*"*$/, '')
-					check = fields[1].gsub(/^"*\s*/, '').gsub(/\s*"*$/, '')
-					what = @account + fields[2].gsub(/^"*\s*/, '').gsub(/\s*"*$/, '')
-					amount = fields[3].gsub(/^"*\s*/, '').gsub(/\s*"*$/, '')
+			lines.each do |fields|
+				if fields[2]
+					date = fields[2].gsub(/^"*\s*/, '').gsub(/\s*"*$/, '')
+					if fields[3]
+						check = fields[3].gsub(/^"*\s*/, '').gsub(/\s*"*$/, '')
+					else
+						check = ''
+					end
+					what = @account + fields[4].gsub(/^"*\s*/, '').gsub(/\s*"*$/, '')
+					amount = fields[6].gsub(/^"*\s*/, '').gsub(/\s*"*$/, '')
 					if amount[0] == '-'
 						pm = '-'
 						amount = amount.gsub(/-/, '')
