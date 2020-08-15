@@ -6,6 +6,6 @@ development:
   encoding: unicode
   database: home
 
-test:
+# test:
 
-production:
+# production:
