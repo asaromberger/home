@@ -95,23 +95,55 @@ class BulkinputController < ApplicationController
 				@account = params[:account] + ':'
 			end
 			# CSV File Input
+			if lines[0][0].blank?
+				# old style, no headers
+				datefield = 2
+				whatfield = 4
+				amountfield = 6
+			else
+				# new style, find headers
+				datefield = ''
+				whatfield = ''
+				amountfield = ''
+				i = 0
+				lines[0].each do |field|
+					if field.match(/Date/)
+						datefield = i
+					elsif field.match(/Original Description/)
+						whatfield = i
+						checkfield = 1
+					elsif field.match(/Amount/)
+						amountfield = i
+					end
+					i = i + 1
+				end
+				header = 1
+				if datefield.blank? || whatfield.blank? || amountfield.blank?
+					$errors.push("Cannot locate fields")
+					redirect_to new_bulkinput_path(documentname: @documentname, errors: @errors)
+					return
+				end
+			end
 			lines = lines.reverse
 			lines.each do |fields|
-				if fields[2]
-					date = fields[2].gsub(/^"*\s*/, '').gsub(/\s*"*$/, '')
-					if fields[3]
-						check = fields[3].gsub(/^"*\s*/, '').gsub(/\s*"*$/, '')
+				if fields[datefield].match(/Date/)
+					next
+				end
+				if fields[datefield]
+					what = @account + fields[whatfield].gsub(/^"*\s*/, '').gsub(/\s*"*$/, '')
+					if what.match('CHECK')
+						check = what.gsub(/.*#\s*/, '').gsub(/\s*$/, '')
 					else
 						check = ''
 					end
-					what = @account + fields[4].gsub(/^"*\s*/, '').gsub(/\s*"*$/, '')
-					amount = fields[6].gsub(/^"*\s*/, '').gsub(/\s*"*$/, '')
+					amount = fields[amountfield].gsub(/^"*\s*/, '').gsub(/\s*"*$/, '')
 					if amount[0] == '-'
 						pm = '-'
 						amount = amount.gsub(/-/, '')
 					else
 						pm = '+'
 					end
+					date = fields[datefield]
 					datesep = date.split("/")
 					if datesep[0].to_i > 100
 						month = datesep[1]
