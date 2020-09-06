@@ -16,10 +16,6 @@
 					<li><%= link_to 'Jira', jiras_path %></li>
 				<% end %>
 
-				<% if has_role(current_user.id, 'conversations') %>
-					<li><%= link_to 'Conversations', people_path %></li>
-				<% end %>
-
 				<% if has_role(current_user.id, 'investments') %>
 					<%= render 'layouts/menu_investments' %>
 				<% end %>

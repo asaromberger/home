@@ -5,7 +5,6 @@ class User < ApplicationRecord
 	has_secure_password
 
 	has_many :permissions
-	has_many :people
 
 	def User.new_remember_token
 		SecureRandom.urlsafe_base64
