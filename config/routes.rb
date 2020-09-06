@@ -5,8 +5,6 @@ Rails.application.routes.draw do
 	resources :sessions
 	match '/signout', to: 'sessions#destroy', via: :delete
 
-	resources :jiras
-
 	resources :users
 	match '/users_password_reset', to: 'users#password_reset', via: :get
 	match '/users_password_reset_update', to: 'users#password_reset_update', via: :put
@@ -42,10 +40,6 @@ Rails.application.routes.draw do
 	resources :unused
 
 	resources :taxes
-
-	resources :people
-
-	resources :conversations
 
 	resources :accounts
 	match 'account_close', to: 'accounts#close', via: :put
