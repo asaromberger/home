@@ -45,7 +45,7 @@ class RentalcostsController < ApplicationController
 		Item.joins(:what => :category).where("ctype = 'rental' AND EXTRACT(year FROM date) >= ? AND EXTRACT(year FROM date) <= ?", @fromyear, @toyear).each do |item|
 			category = categories[whatcatids[item.what_id]]
 			subcategory = subcategories[whatcatids[item.what_id]]
-			if subcategory == 'Rent' || subcategory == 'Security Deposit'
+			if subcategory == 'Security Deposit'
 				next
 			end
 			amount = item.amount
@@ -71,20 +71,22 @@ class RentalcostsController < ApplicationController
 			else
 				@data[category][subcategory]['total'] = amount
 			end
-			# accumulate in cat totals
-			if ! @data[category]['~']
-				@data[category]['~'] = Hash.new
-			end
-			if @data[category]['~'][year]
-				@data[category]['~'][year] = @data[category]['~'][year] + amount
-			else
-				@data[category]['~'][year] = amount
-			end
-			# accumulate in cat/total
-			if @data[category]['~']['total']
-				@data[category]['~']['total'] = @data[category]['~']['total'] + amount
-			else
-				@data[category]['~']['total'] = amount
+			if subcategory != 'Upkeep' && subcategory != 'Rent'
+				# accumulate in cat totals
+				if ! @data[category]['~']
+					@data[category]['~'] = Hash.new
+				end
+				if @data[category]['~'][year]
+					@data[category]['~'][year] = @data[category]['~'][year] + amount
+				else
+					@data[category]['~'][year] = amount
+				end
+				# accumulate in cat/total
+				if @data[category]['~']['total']
+					@data[category]['~']['total'] = @data[category]['~']['total'] + amount
+				else
+					@data[category]['~']['total'] = amount
+				end
 			end
 		end
 		# averages
