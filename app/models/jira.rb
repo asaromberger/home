@@ -1,2 +1,0 @@
-class Jira < ApplicationRecord
-end
