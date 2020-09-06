@@ -118,6 +118,24 @@ class RunningbudgetController < ApplicationController
 		end
 	end
 
+	def show
+		@title = 'Items'
+		@fromyear = params[:fromyear]
+		@toyear = params[:toyear]
+		@type = params[:type]
+		@cat = params[:cat]
+		@subcat = params[:subcat]
+		category_ids = Category.where("ctype = ? AND category = ? AND subcategory = ?", @type, @cat, @subcat).pluck('id')
+		@whats = Hash.new
+		what_ids = []
+		What.where("category_id IN (?)", category_ids).each do |what|
+			what_ids.push(what.id)
+			@whats[what.id] = what.what
+		end
+		@items = Item.where("EXTRACT(year FROM date) >= ? AND EXTRAcT(year FROM date) <= ? AND what_id IN (?)", @fromyear, @toyear, what_ids).order('date')
+		render 'yearbudget/show'
+	end
+
 private
 
 	def require_expenses
