@@ -12,10 +12,6 @@
 					<%= render 'layouts/menu_admin' %>
 				<% end %>
 
-				<% if has_role(current_user.id, 'jira') %>
-					<li><%= link_to 'Jira', jiras_path %></li>
-				<% end %>
-
 				<% if has_role(current_user.id, 'investments') %>
 					<%= render 'layouts/menu_investments' %>
 				<% end %>

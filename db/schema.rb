@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_05_235542) do
+ActiveRecord::Schema.define(version: 2020_09_06_001823) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -76,15 +76,6 @@ ActiveRecord::Schema.define(version: 2020_09_05_235542) do
     t.decimal "amount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "jiras", id: :serial, force: :cascade do |t|
-    t.string "summary"
-    t.string "status"
-    t.string "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "priority"
   end
 
   create_table "permissions", id: :serial, force: :cascade do |t|

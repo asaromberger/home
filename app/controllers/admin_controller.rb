@@ -11,7 +11,7 @@ class AdminController < ApplicationController
 	def roles_edit
 		@user = User.find_by(signin: params[:signin])
 		if @user
-			@roles = ['admin', 'jira', 'investments', 'expenses']
+			@roles = ['admin', 'investments', 'expenses']
 			@values = Hash.new
 			@roles.each do |role|
 				p = Permission.where("user_id = ? AND pkey = ?", @user.id, role)
@@ -28,7 +28,7 @@ class AdminController < ApplicationController
 
 	def roles_update
 		@user = User.find(params[:id])
-		['admin', 'jira', 'investments', 'expenses'].each do |role|
+		['admin', 'investments', 'expenses'].each do |role|
 			if params[role] == 'on'
 				if Permission.where("user_id = ? and pkey = ?", @user.id, role).count == 0
 					p = Permission.new
