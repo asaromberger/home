@@ -49,7 +49,7 @@
 				<td class='<%= tclass %>'><%= 'Total' %></td>
 			<% else %>
 				<% tclass = "" %>
-				<td><%= link_to subcat, yearbudget_path(id: 0, year: @year, type: ctype, cat: cat, subcat: subcat) %></td>
+				<td><%= link_to subcat, runningbudget_path(id: 0, fromyear: @year, toyear: @year, type: ctype, cat: cat, subcat: subcat) %></td>
 			<% end %>
 			<% 12.times do |month| %>
 				<td class='<%= tclass %> number' <%= tclass %> ><%= number_with_precision(subcatdata[month + 1], precision: 2) %></td>
