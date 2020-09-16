@@ -133,7 +133,7 @@ class RunningbudgetController < ApplicationController
 			@whats[what.id] = what.what
 		end
 		@items = Item.where("EXTRACT(year FROM date) >= ? AND EXTRAcT(year FROM date) <= ? AND what_id IN (?)", @fromyear, @toyear, what_ids).order('date')
-		render 'yearbudget/show'
+		render 'runningbudget/show'
 	end
 
 private
