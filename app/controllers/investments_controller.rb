@@ -137,6 +137,7 @@ class InvestmentsController < ApplicationController
 		if @account.atype == 'brokerage'
 			params[:investment][:value] = params[:investment][:shares].to_f * params[:investment][:pershare].to_f
 		end
+		session['investmentdate'] = @investment.date
 		if @investment.update(investment_params)
 			redirect_to investments_path(status: @status), notice: 'Item Updated'
 		else
