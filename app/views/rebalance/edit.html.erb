@@ -29,6 +29,11 @@
 
 	<div class='clearfix'><p>&nbsp;</p></div>
 
+	<%= check_box_tag :withdraw_only, nil, nil, class: 'col-xs-1' %>
+	<%= label_tag :withdraw_only, 'Withdrawal only', class: 'col-xs-11' %>
+
+	<div class='clearfix'><p>&nbsp;</p></div>
+
 	<%= submit_tag 'Rebalance', class: 'btn btn-primary col-md-2' %>
 
 <% end %>
