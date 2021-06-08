@@ -16,7 +16,7 @@ class RentController < ApplicationController
 		end
 		@title = "Rents from #{@fromyear} to #{@toyear}"
 		@pickyears = []
-		Item.all.pluck("DISTINCT EXTRACT(year FROM date)").each do |year|
+		Item.all.pluck(Arel.sql("DISTINCT EXTRACT(year FROM date)")).each do |year|
 			@pickyears.push(year.to_i)
 		end
 		@pickyears = @pickyears.sort

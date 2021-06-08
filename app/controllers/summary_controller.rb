@@ -16,7 +16,7 @@ class SummaryController < ApplicationController
 		end
 		@title = "Investments Summary"
 		@pickyears = []
-		Investment.all.pluck("DISTINCT EXTRACT(year FROM date)").each do |year|
+		Investment.all.pluck(Arel.sql("DISTINCT EXTRACT(year FROM date)")).each do |year|
 			@pickyears.push(year.to_i)
 		end
 		@pickyears = @pickyears.sort
