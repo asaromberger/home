@@ -11,7 +11,7 @@ class YearbudgetController < ApplicationController
 		end
 		@title = "#{@year} Budget"
 		@years = []
-		Item.all.pluck("DISTINCT EXTRACT(year FROM date)").each do |year|
+		Item.all.pluck(Arel.sql("DISTINCT EXTRACT(year FROM date)")).each do |year|
 			@years.push(year.to_i)
 		end
 		@years = @years.sort.reverse
